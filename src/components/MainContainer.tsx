@@ -13,13 +13,13 @@ export const MainContainer = () => {
     <Router>
       <div>
         <div>
-          <Link to="/signUp">Home</Link>
+          <Link to="/signUp">Sign Up</Link>
         </div>
         <div>
-          <Link to="/signIn">Home</Link>
+          <Link to="/signIn">Sign In</Link>
         </div>
         <div>
-          <Link to="/passwordReset">Home</Link>
+          <Link to="/passwordReset">Password Reset</Link>
         </div>
         <Switch>
           <Route path="/signUp">

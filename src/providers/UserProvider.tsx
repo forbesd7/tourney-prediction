@@ -1,15 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
-import { User } from "firebase";
+import { auth, generateUserDocument } from "../firebase";
 
-type UserState = User | null;
+type UserState = any;
 
 interface UserStateContext {
-  user: UserState;
+  user: any;
   setUser: React.Dispatch<React.SetStateAction<UserState>>;
 }
 
-const defaultUserStateContext = {
+const defaultUserStateContext: UserStateContext = {
   user: null,
   setUser: (): void => {},
 };
@@ -18,12 +17,15 @@ export const UserContext = createContext<UserStateContext>(
   defaultUserStateContext
 );
 
-const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserState>(null);
 
   useEffect(() => {
-    auth.onAuthStateChanged((userAuth) => {
-      setUser(userAuth);
+    auth.onAuthStateChanged(async (userAuth) => {
+      const user = await generateUserDocument(userAuth);
+      if (user) {
+        setUser(user);
+      }
     });
   });
 

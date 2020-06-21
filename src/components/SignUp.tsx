@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { auth, generateUserDocument } from "../firebase";
 
 export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [error] = useState(null);
-  const createUserWithEmailAndPasswordHandler = (
+  const [error, setError] = useState<string | null>(null);
+  const createUserWithEmailAndPasswordHandler = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     email: string,
     password: string
   ) => {
     event.preventDefault();
+
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log(user);
+      generateUserDocument(user);
+    } catch (err) {
+      setError("Error Signing up with email and password");
+      console.error(err);
+    }
     setEmail("");
     setPassword("");
     setDisplayName("");
   };
+
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
     if (name === "userEmail") {

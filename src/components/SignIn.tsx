@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
 export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const signInWithEmailAndPasswordHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     email: string,
     password: string
   ) => {
     event.preventDefault();
+
+    auth.signInWithEmailAndPassword(email, password).catch((err) => {
+      setError("Error signing in with password and email!");
+      console.error("Error signing in with password and email", err);
+    });
   };
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
 
 export const PasswordReset = () => {
   const [email, setEmail] = useState("");
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.currentTarget;
     if (name === "userEmail") {
@@ -15,6 +16,17 @@ export const PasswordReset = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+    auth
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setEmailHasBeenSent(true);
+        setTimeout(() => {
+          setEmailHasBeenSent(false);
+        }, 3000);
+      })
+      .catch(() => {
+        setError("Error resetting password");
+      });
   };
   return (
     <div className="mt-8">
@@ -45,7 +57,10 @@ export const PasswordReset = () => {
             onChange={onChangeHandler}
             className="mb-3 w-full px-1 py-2"
           />
-          <button className="w-full bg-blue-400 text-white py-3">
+          <button
+            onClick={sendResetEmail}
+            className="w-full bg-blue-400 text-white py-3"
+          >
             Send me a reset link
           </button>
         </form>
