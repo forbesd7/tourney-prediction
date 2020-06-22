@@ -12,37 +12,32 @@ export const MainContainer = () => {
 
   return (
     <Fragment>
-      <Navbar />
-      {user ? (
-        <ProfilePage />
-      ) : (
-        <Router>
+      <Router>
+        <div>
           <div>
-            <div>
-              <Link to="/signUp">Sign Up</Link>
-            </div>
-            <div>
-              <Link to="/signIn">Sign In</Link>
-            </div>
-            <div>
-              <Link to="/passwordReset">Password Reset</Link>
-            </div>
-            <Switch>
-              <Route path="/signUp">
-                <SignUp />
-              </Route>
-
-              <Route path="/signIn">
-                <SignIn />
-              </Route>
-
-              <Route path="/passwordReset">
-                <PasswordReset />
-              </Route>
-            </Switch>
+            <Link to="/signUp">Sign Up</Link>
           </div>
-        </Router>
-      )}
+          <div>
+            <Link to="/signIn">Sign In</Link>
+          </div>
+          <div>
+            <Link to="/passwordReset">Password Reset</Link>
+          </div>
+          <Switch>
+            <Route path="/signUp">
+              <SignUp />
+            </Route>
+
+            <Route path="/signIn">
+              <SignIn />
+            </Route>
+
+            <Route path="/passwordReset">
+              <PasswordReset />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     </Fragment>
   );
 };
