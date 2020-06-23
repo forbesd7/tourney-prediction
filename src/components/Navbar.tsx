@@ -1,41 +1,33 @@
 import React, { useContext } from "react";
 import { UserContext } from "../providers/UserProvider";
-import { AppBar, Button, Typography, Toolbar } from "@material-ui/core";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {},
-    title: {},
-    navButton: {
-      color: "white",
-    },
-    navbar: {
-      justifyContent: "space-between",
-    },
-  })
-);
+import { Typography, Toolbar } from "@material-ui/core";
+import { Button } from "../styled-components/Button";
+import { NavbarComponent } from "../styled-components/NavbarComponent";
+import StyledLink from "../styled-components/StyledLink";
+import { NavbarTitle } from "../styled-components/NavbarTitle";
+import { NavbarTitleSection } from "../styled-components/NavbarTitleSection";
 export const Navbar = () => {
   const { user } = useContext(UserContext);
-  const classes = useStyles();
   return (
-    <AppBar position="static">
-      <Toolbar className={classes.navbar}>
-        <Typography>SC2 Predictor</Typography>
+    <NavbarComponent>
+      <Typography>SC2 Predictor</Typography>
 
-        <Button component={Link} to={"/signIn"} className={classes.navButton}>
-          Tournaments
-        </Button>
+      <NavbarTitleSection>
+        <StyledLink to="/profile">
+          <NavbarTitle>Tournaments</NavbarTitle>
+        </StyledLink>
+      </NavbarTitleSection>
+      <NavbarTitleSection>
+        <StyledLink to="/profile">
+          <NavbarTitle>Profile</NavbarTitle>
+        </StyledLink>
+      </NavbarTitleSection>
 
-        <Button component={Link} to={"/profile"} className={classes.navButton}>
-          Tournaments
-        </Button>
-
-        <Button className={classes.navButton}>
-          {user ? "Log Out" : "Log in"}
-        </Button>
-      </Toolbar>
-    </AppBar>
+      <NavbarTitleSection>
+        <StyledLink to="/profile">
+          <NavbarTitle>{user ? "Log Out" : "Log in"}</NavbarTitle>
+        </StyledLink>
+      </NavbarTitleSection>
+    </NavbarComponent>
   );
 };
