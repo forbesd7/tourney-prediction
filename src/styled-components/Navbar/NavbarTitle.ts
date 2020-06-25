@@ -5,9 +5,10 @@ interface NavbarTitleProps {
 }
 
 const NavbarTitle = styled.p<NavbarTitleProps>`
-  color: #a3b8cc;
   font-weight: bold;
   font-size: 18px;
+  padding-right: 2em;
+  padding-left: 2em;
 `;
 
 export { NavbarTitle };

@@ -7,9 +7,10 @@ interface NavbarProps {
 const NavbarComponent = styled.div<NavbarProps>`
   display: flex;
   justify-content: space-between;
-  height: 60px;
+  height: 6em;
   width: 100%;
-  background-color: #065dba;
+  background-color: #001f3f;
+  opacity: 0.9;
 `;
 
 export { NavbarComponent };
