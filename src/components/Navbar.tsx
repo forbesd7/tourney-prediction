@@ -6,6 +6,7 @@ import StyledLink from "../styled-components/StyledLink";
 import { NavbarTitle } from "../styled-components/Navbar/NavbarTitle";
 import { Menu } from "../styled-components/Navbar/Menu";
 import { NavbarTitleSection } from "../styled-components/Navbar/NavbarTitleSection";
+import { DropdownContainer } from "../styled-components/Navbar/DropdownContainer";
 import { Logo } from "../styled-components/Navbar/Logo";
 export const Navbar = () => {
   const { user } = useContext(UserContext);
@@ -23,26 +24,40 @@ export const Navbar = () => {
         <Logo>SC2 Predictor</Logo>
 
         <NavbarTitleSection borderR borderL>
-          <NavbarTitleSection hover borderR>
-            <NavbarTitle>Tournaments</NavbarTitle>
-          </NavbarTitleSection>
-          <NavbarTitleSection hover>
-            <NavbarTitle>Predictions</NavbarTitle>
-          </NavbarTitleSection>
+          <StyledLink to="/tournaments">
+            <NavbarTitleSection hover borderR>
+              <NavbarTitle>Tournaments</NavbarTitle>
+            </NavbarTitleSection>
+          </StyledLink>
+
+          <StyledLink to="/predictions">
+            <NavbarTitleSection hover>
+              <NavbarTitle>Predictions</NavbarTitle>
+            </NavbarTitleSection>
+          </StyledLink>
+
+          <StyledLink to="/predictions">
+            <NavbarTitleSection borderL hover>
+              <NavbarTitle>Leaderboard</NavbarTitle>
+            </NavbarTitleSection>
+          </StyledLink>
         </NavbarTitleSection>
 
         <NavbarTitleSection
           onMouseOver={(e) => setShowMenuFunc(e, true)}
-          onMouseLeave={(e) => setShowMenuFunc(e, false)}
           borderL
           borderR
           hover
-          mr={20}
+          mr={10}
+          account
         >
           <NavbarTitle>Account</NavbarTitle>
+          {showMenu ? <DropdownContainer>Profile</DropdownContainer> : ""}
+          {showMenu ? <DropdownContainer>Settings</DropdownContainer> : ""}
+          {showMenu ? <DropdownContainer>Help</DropdownContainer> : ""}
+          {showMenu ? <DropdownContainer>Log out</DropdownContainer> : ""}
         </NavbarTitleSection>
       </Menu>
-      {showMenu ? <div>hey</div> : ""}
     </NavbarComponent>
   );
 };

@@ -7,7 +7,7 @@ interface LogoProps {
 const Logo = styled.div<LogoProps>`
   color: #ffffff;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 1em;
   padding-left: 1em;
 `;
 
