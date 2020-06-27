@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
-import { Button } from "../styled-components/Button";
+import { Button } from "../styled-components/General/Button";
 import { NavbarComponent } from "../styled-components/Navbar/NavbarComponent";
 import StyledLink from "../styled-components/StyledLink";
 import { NavbarTitle } from "../styled-components/Navbar/NavbarTitle";

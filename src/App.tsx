@@ -8,6 +8,7 @@ import { Navbar } from "./components/Navbar";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { Tournaments } from "./components/Tournaments";
+import { CreateTournamentContainer } from "./components/CreateTournament/CreateTournamentContainer";
 
 function App() {
   return (
@@ -19,7 +20,11 @@ function App() {
           <Route path="/signIn" component={SignIn}></Route>
           <Route path="/signUp" component={SignUp}></Route>
           <Route path="/home" component={SignUp}></Route>
-          <Route path="/home" component={Tournaments}></Route>
+          <Route path="/tournaments" component={Tournaments}></Route>
+          <Route
+            path="/createTournament"
+            component={CreateTournamentContainer}
+          ></Route>
           <MainContainer />
         </Switch>
       </UserProvider>

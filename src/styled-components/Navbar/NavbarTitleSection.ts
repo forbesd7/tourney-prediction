@@ -22,7 +22,7 @@ const NavbarTitleSection = styled.div<NavbarTitleSectionProps>`
   display: flex;
   flex-direction: ${(props) => (props.account ? `column` : "row")};
   justify-content: space-between;
-  margin-right: ${(props) => (props.mr ? `${props.mr}px` : "")};
+  margin-right: ${(props) => (props.mr ? `${props.mr}em` : "")};
   height: 4em;
   align-items: center;
   border-right: ${(props) => (props.borderR ? `2px #4981ce solid;` : "")};
