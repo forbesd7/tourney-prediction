@@ -11,10 +11,8 @@ import {
   FormContainer,
   ButtonContainer,
 } from "../../styled-components/Form/index";
-import { Button } from "../../styled-components/General/index";
 import { FormatButton } from "./FormatButton";
-import StyledLink from "../../styled-components/StyledLink";
-
+import { TournamentPreview } from "./TournamentPreviewContainer";
 const formatButtons = ["Bracket", "Groups"];
 const numPlayers = [4, 8, 16, 32, 64];
 export const CreateTournamentContainer = () => {
@@ -63,6 +61,7 @@ export const CreateTournamentContainer = () => {
             <ButtonContainer>{renderButtons("numPlayers")}</ButtonContainer>
           </FormGroup>
         </FormContainer>
+        <TournamentPreview />
       </TwoPartContainer>
     </Fragment>
   );
