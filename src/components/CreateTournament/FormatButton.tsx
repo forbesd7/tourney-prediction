@@ -4,6 +4,7 @@ import { UserContext } from "../../providers/UserProvider";
 
 interface FormatButtonProps {
   size?: string;
+  buttonType: string;
   label: string | number;
   selectedFormat: string | number;
   setSelectedButton: React.Dispatch<React.SetStateAction<any>>;

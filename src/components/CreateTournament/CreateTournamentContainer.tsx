@@ -13,12 +13,31 @@ import {
 } from "../../styled-components/Form/index";
 import { FormatButton } from "./FormatButton";
 import { TournamentPreview } from "./TournamentPreviewContainer";
+import { TournamentOptions } from "./tournament-options/TournamentOptions";
+
 const formatButtons = ["Bracket", "Groups"];
-const numPlayers = [4, 8, 16, 32, 64];
+
+export interface BracketOption {
+  selectedNumOfPlayers: number;
+}
+
+const defaultBracketOptions: BracketOption = {
+  selectedNumOfPlayers: 8,
+};
+
 export const CreateTournamentContainer = () => {
   const { user } = useContext(UserContext);
   const [selectedFormat, setSelectedFormat] = useState("Bracket");
-  const [selectedNumPlayers, setSelectedNumPlayers] = useState(8);
+  const [bracketOptions, setBracketOptions] = useState<BracketOption>(
+    defaultBracketOptions
+  );
+
+  const updateBracketOptions = (
+    option: string,
+    selectedVal: string | number
+  ) => {
+    setBracketOptions({ ...bracketOptions, [option]: selectedVal });
+  };
 
   const renderButtons = (buttonType: string) => {
     if (buttonType === "format") {
@@ -26,23 +45,15 @@ export const CreateTournamentContainer = () => {
         <FormatButton
           size="normal"
           key={button}
+          buttonType={"format"}
           label={button}
           selectedFormat={selectedFormat}
           setSelectedButton={setSelectedFormat}
         ></FormatButton>
       ));
-    } else if ((buttonType = "numPlayers")) {
-      return numPlayers.map((button) => (
-        <FormatButton
-          size="small"
-          key={button}
-          label={button}
-          selectedFormat={selectedNumPlayers}
-          setSelectedButton={setSelectedNumPlayers}
-        ></FormatButton>
-      ));
     }
   };
+
   return (
     <Fragment>
       <PageTitle>Enter Tournament Information</PageTitle>;
@@ -56,10 +67,14 @@ export const CreateTournamentContainer = () => {
             <Label>Format</Label>
             <ButtonContainer>{renderButtons("format")}</ButtonContainer>
           </FormGroup>
-          <FormGroup>
+          <TournamentOptions
+            bracketOptions={defaultBracketOptions}
+            type={selectedFormat}
+          />
+          {/* <FormGroup>
             <Label>Number of players</Label>
             <ButtonContainer>{renderButtons("numPlayers")}</ButtonContainer>
-          </FormGroup>
+          </FormGroup> */}
         </FormContainer>
         <TournamentPreview />
       </TwoPartContainer>
