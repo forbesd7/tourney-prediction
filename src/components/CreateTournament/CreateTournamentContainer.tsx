@@ -13,6 +13,7 @@ import {
 } from "../../styled-components/Form/index";
 import { FormatButton } from "./FormatButton";
 import { TournamentPreview } from "./TournamentPreviewContainer";
+import { BracketOptions } from "./tournament-options/BracketOptions";
 import { TournamentOptions } from "./tournament-options/TournamentOptions";
 
 const formatButtons = ["Bracket", "Groups"];
@@ -20,9 +21,17 @@ const formatButtons = ["Bracket", "Groups"];
 export interface BracketOption {
   selectedNumOfPlayers: number;
 }
+export interface GroupOption {
+  groupNumber: number;
+  playersPerGroup: number;
+}
 
 const defaultBracketOptions: BracketOption = {
   selectedNumOfPlayers: 8,
+};
+const defaultGroupOptions: GroupOption = {
+  groupNumber: 4,
+  playersPerGroup: 4,
 };
 
 export const CreateTournamentContainer = () => {
@@ -31,12 +40,23 @@ export const CreateTournamentContainer = () => {
   const [bracketOptions, setBracketOptions] = useState<BracketOption>(
     defaultBracketOptions
   );
+  const [groupOptions, setGroupOptions] = useState<GroupOption>(
+    defaultGroupOptions
+  );
 
-  const updateBracketOptions = (
+  const updateOptions = (
+    format: string,
     option: string,
     selectedVal: string | number
   ) => {
-    setBracketOptions({ ...bracketOptions, [option]: selectedVal });
+    switch (format) {
+      case "Bracket":
+        setBracketOptions({ ...bracketOptions, [option]: selectedVal });
+        break;
+      case "Group":
+        setGroupOptions({ ...groupOptions, [option]: selectedVal });
+        break;
+    }
   };
 
   const renderButtons = (buttonType: string) => {
@@ -54,6 +74,25 @@ export const CreateTournamentContainer = () => {
     }
   };
 
+  const renderOptions = () => {
+    if (selectedFormat === "Bracket") {
+      return (
+        <TournamentOptions
+          type={"Bracket"}
+          updateOptions={updateOptions}
+          options={bracketOptions}
+        />
+      );
+    }
+    return (
+      <TournamentOptions
+        type={"Group"}
+        updateOptions={updateOptions}
+        options={groupOptions}
+      />
+    );
+  };
+
   return (
     <Fragment>
       <PageTitle>Enter Tournament Information</PageTitle>;
@@ -67,10 +106,7 @@ export const CreateTournamentContainer = () => {
             <Label>Format</Label>
             <ButtonContainer>{renderButtons("format")}</ButtonContainer>
           </FormGroup>
-          <TournamentOptions
-            bracketOptions={defaultBracketOptions}
-            type={selectedFormat}
-          />
+          {renderOptions()}
           {/* <FormGroup>
             <Label>Number of players</Label>
             <ButtonContainer>{renderButtons("numPlayers")}</ButtonContainer>
