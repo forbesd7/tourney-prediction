@@ -21,7 +21,7 @@ const Button = styled.button<ButtonProps>`
   width: ${(props) => (props.size === "small" ? `2em` : "4em")};
   border-radius: 5px;
   transition: color 0.4s ease-out;
-  transition: background-color 0.4s ease-out;
+  transition: background-color 0.2s ease-out;
   border: ${(props) => (props.selected ? `1.5px #104e8b solid` : "")};
 `;
 

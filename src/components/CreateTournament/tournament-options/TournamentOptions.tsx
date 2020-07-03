@@ -1,17 +1,21 @@
 import React, { useContext, Fragment } from "react";
 import { UserContext } from "../../../providers/UserProvider";
 import { GroupOption, BracketOption } from "../CreateTournamentContainer";
-import { FormatButton } from "../FormatButton";
-
+import { OptionsButton } from "./OptionsButton";
+import {
+  FormGroup,
+  Label,
+  ButtonContainer,
+} from "../../../styled-components/Form/index";
+import { getOptionNames } from "./utils";
 interface TournamentOptionsProps {
   groupOptions?: GroupOption;
   bracketOptions?: BracketOption;
   updateOptions: (
+    selectedVal: string | number,
     format: string,
-    option: string,
-    selectedVal: string | number
+    selectedOption: string
   ) => void;
-  type: string;
 }
 
 const potentialNumForPlayers = [4, 8, 16, 32, 64];
@@ -19,28 +23,62 @@ const potentialNumForGroups: number[] = [4, 8, 10, 12];
 
 export const TournamentOptions = (props: TournamentOptionsProps) => {
   const { user } = useContext(UserContext);
-  const { type, groupOptions, bracketOptions, updateOptions } = props;
+  const { groupOptions, bracketOptions, updateOptions } = props;
 
   const renderButtons = () => {
-    if(groupOptions) {
+    if (groupOptions) {
+      const optionKeys = Object.keys(groupOptions) as Array<
+        keyof typeof groupOptions
+      >;
 
-      const optionKeys = Object.keys(groupOptions) as Array<keyof typeof groupOptions>;
-  
-      optionKeys.map((option) => {
-          return potentialNumForGroups.map((num) => (
-            <FormatButton
-              size="normal"
-              key={option + num}
-              buttonType={"format"}
-              label={num}
-              selectedFormat={groupOptions[option]}
-              setSelectedButton={updateOptions}
-            />
-          ));
+      return optionKeys.map((option, index) => {
+        return (
+          <FormGroup key={option + index}>
+            <Label>{getOptionNames(option)}</Label>
+            <ButtonContainer>
+              {potentialNumForGroups.map((num) => (
+                <OptionsButton
+                  optionType={"Groups"}
+                  option={option}
+                  size="small"
+                  key={option + num}
+                  label={num}
+                  selectedOption={groupOptions[option]}
+                  updateOptions={updateOptions}
+                />
+              ))}
+            </ButtonContainer>
+          </FormGroup>
+        );
+      });
+    } else if (bracketOptions) {
+      const optionKeys = Object.keys(bracketOptions) as Array<
+        keyof typeof bracketOptions
+      >;
+
+      return optionKeys.map((option, index) => {
+        return (
+          <FormGroup key={option + index}>
+            <Label>{getOptionNames(option)}</Label>
+            <ButtonContainer>
+              {potentialNumForPlayers.map((num) => (
+                <OptionsButton
+                  optionType={"Bracket"}
+                  option={option}
+                  size="small"
+                  key={option + num}
+                  label={num}
+                  selectedOption={bracketOptions[option]}
+                  updateOptions={updateOptions}
+                />
+              ))}
+            </ButtonContainer>
+          </FormGroup>
+        );
+      });
     }
-    );
+    return <></>;
   };
-  const renderGroupButtons = () => {};
 
   return <Fragment>{renderButtons()}</Fragment>;
 };
