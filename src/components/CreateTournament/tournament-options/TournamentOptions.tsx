@@ -8,6 +8,7 @@ import {
   ButtonContainer,
 } from "../../../styled-components/Form/index";
 import { getOptionNames } from "./utils";
+
 interface TournamentOptionsProps {
   groupOptions?: GroupOption;
   bracketOptions?: BracketOption;

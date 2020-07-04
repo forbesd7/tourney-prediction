@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { MainContainer } from "./components/MainContainer";
 import { UserProvider } from "./providers/UserProvider";
+import { CreatedTournamentProvider } from "./providers/CreatedTournamentProvider";
 import { Switch, Route } from "react-router-dom";
 import { ProfilePage } from "./components/ProfilePage";
 import { Navbar } from "./components/Navbar";
@@ -14,19 +15,21 @@ function App() {
   return (
     <div className="App">
       <UserProvider>
-        <Navbar />
-        <Switch>
-          <Route path="/profile" component={ProfilePage}></Route>
-          <Route path="/signIn" component={SignIn}></Route>
-          <Route path="/signUp" component={SignUp}></Route>
-          <Route path="/home" component={SignUp}></Route>
-          <Route path="/tournaments" component={Tournaments}></Route>
-          <Route
-            path="/createTournament"
-            component={CreateTournamentContainer}
-          ></Route>
-          <MainContainer />
-        </Switch>
+        <CreatedTournamentProvider>
+          <Navbar />
+          <Switch>
+            <Route path="/profile" component={ProfilePage}></Route>
+            <Route path="/signIn" component={SignIn}></Route>
+            <Route path="/signUp" component={SignUp}></Route>
+            <Route path="/home" component={SignUp}></Route>
+            <Route path="/tournaments" component={Tournaments}></Route>
+            <Route
+              path="/createTournament"
+              component={CreateTournamentContainer}
+            ></Route>
+            <MainContainer />
+          </Switch>
+        </CreatedTournamentProvider>
       </UserProvider>
     </div>
   );

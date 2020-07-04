@@ -12,7 +12,7 @@ import {
   ButtonContainer,
 } from "../../styled-components/Form/index";
 import { FormatButton } from "./FormatButton";
-import { TournamentPreview } from "./TournamentPreviewContainer";
+import { TournamentPreview } from "./tournament-preview/TournamentPreviewContainer";
 import { TournamentOptions } from "./tournament-options/TournamentOptions";
 
 const formatButtons = ["Bracket", "Groups"];
@@ -28,6 +28,7 @@ export interface GroupOption {
 const defaultBracketOptions: BracketOption = {
   selectedNumOfPlayers: 8,
 };
+
 const defaultGroupOptions: GroupOption = {
   groupNumber: 4,
   playersPerGroup: 4,
@@ -36,6 +37,7 @@ const defaultGroupOptions: GroupOption = {
 export const CreateTournamentContainer = () => {
   const { user } = useContext(UserContext);
   const [selectedFormat, setSelectedFormat] = useState<string>("Bracket");
+
   const [bracketOptions, setBracketOptions] = useState<BracketOption>(
     defaultBracketOptions
   );
@@ -102,7 +104,7 @@ export const CreateTournamentContainer = () => {
           </FormGroup>
           {renderOptions()}
         </FormContainer>
-        <TournamentPreview />
+        <TournamentPreview numOfPlayers={bracketOptions.selectedNumOfPlayers} />
       </TwoPartContainer>
     </Fragment>
   );
