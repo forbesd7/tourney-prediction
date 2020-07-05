@@ -3,6 +3,7 @@ import { UserContext } from "../../../providers/UserProvider";
 import {
   PreviewContainer,
   RoundOfContainer,
+  RoundOfTitle,
 } from "../../../styled-components/TournamentPreview/index";
 import { Matchup } from "./Matchup";
 interface TournamentPreviewProps {
@@ -25,14 +26,26 @@ export const TournamentPreview = (props: TournamentPreviewProps) => {
   };
 
   const renderMatchups = (num: number, matchNum: number) => {
+    const roundName = getRoundOfNames(num).toLocaleLowerCase();
     const arrayOfMatchups = [];
 
     while (num !== 0) {
-      arrayOfMatchups.push(<Matchup matchAndRoundNum={`${matchNum}-${num}`} />);
+      arrayOfMatchups.push(
+        <Matchup matchAndRoundNum={`${roundName}-${num}`} />
+      );
       num--;
     }
 
     return arrayOfMatchups;
+  };
+
+  const getRoundOfNames = (num: number) => {
+    if (num === 2) {
+      return "Semi-Finals";
+    } else if (num === 1) {
+      return "Finals";
+    }
+    return `Ro${num * 2}`;
   };
 
   const renderBracket = () => {
@@ -41,11 +54,15 @@ export const TournamentPreview = (props: TournamentPreviewProps) => {
       <PreviewContainer>
         {numOfMatchups.map((num, index) => {
           return (
-            <RoundOfContainer>{renderMatchups(num, index)}</RoundOfContainer>
+            <RoundOfContainer>
+              <RoundOfTitle>{getRoundOfNames(num)}</RoundOfTitle>
+              {renderMatchups(num, index)}
+            </RoundOfContainer>
           );
         })}
       </PreviewContainer>
     );
   };
+
   return <Fragment>{renderBracket()}</Fragment>;
 };

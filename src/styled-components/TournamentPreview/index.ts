@@ -12,6 +12,7 @@ const PreviewContainer = styled.div<PreviewContainerProps>`
   display: flex;
   width: 100%;
   justify-content: space-around;
+  padding: 2em;
 `;
 
 const RoundOfContainer = styled.div<RoundOfContainerProps>`
@@ -26,6 +27,13 @@ const MatchupBox = styled.div<RoundOfContainerProps>`
   background-color: #ffffff;
   color: #4981ce;
   margin-bottom: 2em;
+  width: 80%;
 `;
 
-export { PreviewContainer, RoundOfContainer, MatchupBox };
+const RoundOfTitle = styled.div<RoundOfContainerProps>`
+  color: #ffffff;
+  padding-bottom: 2em;
+  margin-right: 1.5em;
+`;
+
+export { RoundOfTitle, PreviewContainer, RoundOfContainer, MatchupBox };

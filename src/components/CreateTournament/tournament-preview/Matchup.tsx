@@ -28,13 +28,27 @@ export const Matchup = (props: MatchupProps) => {
       },
     });
   };
+
+  const getValue = (matchupSpot: "A" | "B") => {
+    const matchup = matchupInfo[matchAndRoundNum];
+    if (matchup) {
+      const matchupVal = matchupInfo[matchAndRoundNum][matchupSpot];
+      if (matchupVal) {
+        return matchupVal;
+      }
+    }
+    return "";
+  };
+
   return (
     <MatchupBox>
       <Input
         onChange={(e) => updateCurrentMatchup(e, "A")}
         placeholder="Enter player name.."
+        value={getValue("A")}
       ></Input>
       <Input
+        value={getValue("B")}
         onChange={(e) => updateCurrentMatchup(e, "B")}
         placeholder="Enter player name.."
       ></Input>

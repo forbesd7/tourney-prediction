@@ -11,8 +11,8 @@ const Button = styled.button<ButtonProps>`
   &:hover {
     cursor: pointer;
     opacity: 0.8;
-    color: #4981ce;
-    background-color: #ffffff;
+    color: ${(props) => (props.selected ? `#ffffff` : "#ffffff")};
+    background-color: ${(props) => (props.selected ? `#4981ce` : "#ffffff")};
   }
   opacity: ${(props) => (props.selected ? `0.8` : "1")};
   padding: 0.75em;

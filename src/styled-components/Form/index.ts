@@ -14,7 +14,8 @@ interface InputProps {
 
 const Input = styled.input<InputProps>`
   padding: 0.5em;
-  width: 18em;
+  width: 100%;
+  height: 1vh;
 `;
 
 const Label = styled.label<LabelProps>`

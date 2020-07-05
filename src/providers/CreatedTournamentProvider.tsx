@@ -1,7 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 
 interface MatchupInfo {
-  [key: string]: Object;
+  [key: string]: Matchups;
+}
+
+interface Matchups {
+  A: string;
+  B: string;
 }
 
 interface CreatedTournamentContext {

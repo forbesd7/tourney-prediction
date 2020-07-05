@@ -1,6 +1,7 @@
-import React, { useContext, Fragment } from "react";
+import React, { useState, useContext, Fragment, useEffect } from "react";
 import { Button } from "../../../styled-components/General/index";
-import { UserContext } from "../../../providers/UserProvider";
+import { createdTournamentContext } from "../../../providers/CreatedTournamentProvider";
+import { Error } from "../../Error";
 
 interface OptionsButtonProps {
   option: string;
@@ -15,7 +16,6 @@ interface OptionsButtonProps {
   ) => void;
 }
 export const OptionsButton = (props: OptionsButtonProps) => {
-  const { user } = useContext(UserContext);
   const {
     updateOptions,
     label,
@@ -24,6 +24,20 @@ export const OptionsButton = (props: OptionsButtonProps) => {
     selectedOption,
     option,
   } = props;
+  const [renderConfirmation, showRenderConfirmation] = useState(false);
+  const [shouldUpdateSelectedButton, setShouldUpdateSelectedButton] = useState(
+    false
+  );
+  const { updateMatchupInfo } = useContext(createdTournamentContext);
+
+  useEffect(() => {
+    if (shouldUpdateSelectedButton === true) {
+      updateMatchupInfo({});
+      updateOptions(label, optionType, option);
+
+      setShouldUpdateSelectedButton(false);
+    }
+  }, [shouldUpdateSelectedButton]);
 
   const checkSelectedButton = () => {
     if (label === selectedOption) {
@@ -35,9 +49,23 @@ export const OptionsButton = (props: OptionsButtonProps) => {
   const updateSelectedButton = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    updateOptions(label, optionType, option);
+    if (renderConfirmation) return;
+    showRenderConfirmation(true);
   };
 
+  const shouldRenderError = () => {
+    if (renderConfirmation) {
+      const errorMsg =
+        "Changing player number will erase what you've entered. Proceed?";
+      return (
+        <Error
+          showRenderConfirmation={showRenderConfirmation}
+          confirmAction={setShouldUpdateSelectedButton}
+          errorMsg={errorMsg}
+        />
+      );
+    }
+  };
   return (
     <Fragment>
       <Button
@@ -47,6 +75,7 @@ export const OptionsButton = (props: OptionsButtonProps) => {
       >
         {label}
       </Button>
+      {shouldRenderError()}
     </Fragment>
   );
 };
