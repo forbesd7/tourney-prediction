@@ -7,10 +7,8 @@ interface MatchupProps {
   matchAndRoundNum: string;
 }
 export const Matchup = (props: MatchupProps) => {
-  const { matchupInfo, updateMatchupInfo } = useContext(
-    createdTournamentContext
-  );
-
+  const { tournamentInfo, updateInfo } = useContext(createdTournamentContext);
+  const { matchupInfo } = tournamentInfo;
   const { matchAndRoundNum } = props;
 
   const updateCurrentMatchup = (
@@ -20,8 +18,8 @@ export const Matchup = (props: MatchupProps) => {
     let currentMatchup = matchupInfo[matchAndRoundNum];
     let currentPlayerName = event.target.value;
 
-    updateMatchupInfo({
-      ...matchupInfo,
+    updateInfo({
+      ...tournamentInfo,
       [matchAndRoundNum]: {
         ...currentMatchup,
         [matchupSpot]: currentPlayerName,

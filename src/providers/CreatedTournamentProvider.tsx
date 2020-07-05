@@ -1,22 +1,35 @@
 import React, { createContext, useState, useEffect } from "react";
 
-interface MatchupInfo {
-  [key: string]: Matchups;
-}
-
 interface Matchups {
   A: string;
   B: string;
 }
 
-interface CreatedTournamentContext {
+interface MatchupInfo {
+  [key: string]: Matchups;
+}
+
+interface TournamentInfo {
+  numOfPlayers: number;
   matchupInfo: MatchupInfo;
-  updateMatchupInfo: React.Dispatch<React.SetStateAction<MatchupInfo>>;
+}
+
+interface CreatedTournamentContext {
+  tournamentInfo: TournamentInfo;
+  updateInfo: React.Dispatch<React.SetStateAction<TournamentInfo>>;
 }
 
 const defaultCreatedTournamentContext: CreatedTournamentContext = {
+  tournamentInfo: {
+    numOfPlayers: 8,
+    matchupInfo: {},
+  },
+  updateInfo: (): void => {},
+};
+
+const defaultTournamentInfo = {
+  numOfPlayers: 8,
   matchupInfo: {},
-  updateMatchupInfo: (): void => {},
 };
 
 export const createdTournamentContext = createContext<CreatedTournamentContext>(
@@ -24,10 +37,15 @@ export const createdTournamentContext = createContext<CreatedTournamentContext>(
 );
 
 export const CreatedTournamentProvider: React.FC = ({ children }) => {
-  const [matchupInfo, updateMatchupInfo] = useState<MatchupInfo>({});
+  const [tournamentInfo, updateInfo] = useState<TournamentInfo>(
+    defaultTournamentInfo
+  );
   return (
     <createdTournamentContext.Provider
-      value={{ matchupInfo, updateMatchupInfo }}
+      value={{
+        tournamentInfo,
+        updateInfo,
+      }}
     >
       {children}
     </createdTournamentContext.Provider>

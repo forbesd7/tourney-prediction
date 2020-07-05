@@ -6,24 +6,14 @@ import {
   RoundOfTitle,
 } from "../../../styled-components/TournamentPreview/index";
 import { Matchup } from "./Matchup";
-interface TournamentPreviewProps {
-  numOfPlayers: number;
-}
+import { createdTournamentContext } from "../../../providers/CreatedTournamentProvider";
+import { getNumOfMatchups, getRoundOfNames } from "../../utils";
+
+interface TournamentPreviewProps {}
 export const TournamentPreview = (props: TournamentPreviewProps) => {
   const { user } = useContext(UserContext);
-  const { numOfPlayers } = props;
-
-  const getNumOfMatchups = () => {
-    let numOfPlayersToBeDivided = numOfPlayers;
-    let numOfMatchups = [];
-
-    while (numOfPlayersToBeDivided % 2 === 0) {
-      numOfMatchups.push(numOfPlayersToBeDivided / 2);
-      numOfPlayersToBeDivided /= 2;
-    }
-
-    return numOfMatchups;
-  };
+  const { tournamentInfo } = useContext(createdTournamentContext);
+  const { numOfPlayers } = tournamentInfo;
 
   const renderMatchups = (num: number, matchNum: number) => {
     const roundName = getRoundOfNames(num).toLocaleLowerCase();
@@ -39,17 +29,8 @@ export const TournamentPreview = (props: TournamentPreviewProps) => {
     return arrayOfMatchups;
   };
 
-  const getRoundOfNames = (num: number) => {
-    if (num === 2) {
-      return "Semi-Finals";
-    } else if (num === 1) {
-      return "Finals";
-    }
-    return `Ro${num * 2}`;
-  };
-
   const renderBracket = () => {
-    const numOfMatchups = getNumOfMatchups();
+    const numOfMatchups = getNumOfMatchups(numOfPlayers);
     return (
       <PreviewContainer>
         {numOfMatchups.map((num, index) => {

@@ -9,38 +9,30 @@ interface OptionsButtonProps {
   label: string | number;
   optionType: string;
   selectedOption: number;
-  updateOptions: (
-    selectedVal: string | number,
-    format: string,
-    selectedOption: string
-  ) => void;
 }
 export const OptionsButton = (props: OptionsButtonProps) => {
-  const {
-    updateOptions,
-    label,
-    optionType,
-    size,
-    selectedOption,
-    option,
-  } = props;
+  const { label, optionType, size, selectedOption, option } = props;
   const [renderConfirmation, showRenderConfirmation] = useState(false);
   const [shouldUpdateSelectedButton, setShouldUpdateSelectedButton] = useState(
     false
   );
-  const { updateMatchupInfo } = useContext(createdTournamentContext);
+  const { tournamentInfo, updateInfo } = useContext(createdTournamentContext);
+  const { numOfPlayers, matchupInfo } = tournamentInfo;
 
   useEffect(() => {
     if (shouldUpdateSelectedButton === true) {
-      updateMatchupInfo({});
-      updateOptions(label, optionType, option);
+      updateInfo({
+        ...tournamentInfo,
+        matchupInfo: {},
+        numOfPlayers: label as number,
+      });
 
       setShouldUpdateSelectedButton(false);
     }
   }, [shouldUpdateSelectedButton]);
 
   const checkSelectedButton = () => {
-    if (label === selectedOption) {
+    if (label === numOfPlayers) {
       return true;
     }
     return false;
@@ -50,6 +42,13 @@ export const OptionsButton = (props: OptionsButtonProps) => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (renderConfirmation) return;
+
+    if (Object.keys(matchupInfo).length === 0) {
+      updateInfo({ ...tournamentInfo, numOfPlayers: label as number });
+      return;
+    }
+
+    if (label === selectedOption) return;
     showRenderConfirmation(true);
   };
 

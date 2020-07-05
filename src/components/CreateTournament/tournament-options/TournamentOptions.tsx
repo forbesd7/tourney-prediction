@@ -12,11 +12,6 @@ import { getOptionNames } from "./utils";
 interface TournamentOptionsProps {
   groupOptions?: GroupOption;
   bracketOptions?: BracketOption;
-  updateOptions: (
-    selectedVal: string | number,
-    format: string,
-    selectedOption: string
-  ) => void;
 }
 
 const potentialNumForPlayers = [4, 8, 16, 32, 64];
@@ -24,7 +19,7 @@ const potentialNumForGroups: number[] = [4, 8, 10, 12];
 
 export const TournamentOptions = (props: TournamentOptionsProps) => {
   const { user } = useContext(UserContext);
-  const { groupOptions, bracketOptions, updateOptions } = props;
+  const { groupOptions, bracketOptions } = props;
 
   const renderButtons = () => {
     if (groupOptions) {
@@ -45,7 +40,6 @@ export const TournamentOptions = (props: TournamentOptionsProps) => {
                   key={option + num}
                   label={num}
                   selectedOption={groupOptions[option]}
-                  updateOptions={updateOptions}
                 />
               ))}
             </ButtonContainer>
@@ -70,7 +64,6 @@ export const TournamentOptions = (props: TournamentOptionsProps) => {
                   key={option + num}
                   label={num}
                   selectedOption={bracketOptions[option]}
-                  updateOptions={updateOptions}
                 />
               ))}
             </ButtonContainer>
