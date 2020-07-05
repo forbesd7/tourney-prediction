@@ -8,6 +8,7 @@ import {
   ButtonContainer,
 } from "../../../styled-components/Form/index";
 import { getOptionNames } from "./utils";
+import { SubOptions } from "./SubOptions";
 
 interface TournamentOptionsProps {
   groupOptions?: GroupOption;
@@ -74,5 +75,15 @@ export const TournamentOptions = (props: TournamentOptionsProps) => {
     return <></>;
   };
 
-  return <Fragment>{renderButtons()}</Fragment>;
+  const renderSubOptions = () => {
+    if (bracketOptions) {
+      return <SubOptions />;
+    }
+  };
+
+  return (
+    <Fragment>
+      {renderButtons()} {renderSubOptions()}
+    </Fragment>
+  );
 };

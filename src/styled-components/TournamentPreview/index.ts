@@ -8,10 +8,13 @@ interface PreviewContainerProps {
   readonly type?: string;
 }
 
+interface MatchupProps {
+  readonly marginBottom?: string;
+}
+
 const PreviewContainer = styled.div<PreviewContainerProps>`
   display: flex;
   width: 100%;
-  justify-content: space-around;
   padding: 2em;
 `;
 
@@ -21,7 +24,7 @@ const RoundOfContainer = styled.div<RoundOfContainerProps>`
   justify-content: center;
 `;
 
-const MatchupBox = styled.div<RoundOfContainerProps>`
+const MatchupBox = styled.div<MatchupProps>`
   display: flex;
   flex-direction: column;
   background-color: #ffffff;

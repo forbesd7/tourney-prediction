@@ -15,13 +15,16 @@ export const TournamentPreview = (props: TournamentPreviewProps) => {
   const { tournamentInfo } = useContext(createdTournamentContext);
   const { numOfPlayers } = tournamentInfo;
 
-  const renderMatchups = (num: number, matchNum: number) => {
+  const renderMatchups = (num: number, index: number) => {
     const roundName = getRoundOfNames(num).toLocaleLowerCase();
     const arrayOfMatchups = [];
-
+    const marginAmnt = `${(index + 1) * 4}`;
     while (num !== 0) {
       arrayOfMatchups.push(
-        <Matchup matchAndRoundNum={`${roundName}-${num}`} />
+        <Matchup
+          marginAmnt={marginAmnt}
+          matchAndRoundNum={`${roundName}-${num}`}
+        />
       );
       num--;
     }
