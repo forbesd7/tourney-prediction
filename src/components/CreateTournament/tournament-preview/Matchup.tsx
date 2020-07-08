@@ -5,12 +5,12 @@ import { createdTournamentContext } from "../../../providers/CreatedTournamentPr
 
 interface MatchupProps {
   matchAndRoundNum: string;
-  marginAmnt: string;
+  roundNum: number;
 }
 export const Matchup = (props: MatchupProps) => {
   const { tournamentInfo, updateInfo } = useContext(createdTournamentContext);
-  const { matchupInfo } = tournamentInfo;
-  const { matchAndRoundNum, marginAmnt } = props;
+  const { matchupInfo, numOfPlayers } = tournamentInfo;
+  const { matchAndRoundNum, roundNum } = props;
 
   const updateCurrentMatchup = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -41,8 +41,22 @@ export const Matchup = (props: MatchupProps) => {
     return "";
   };
 
+  const calculateSpacing = () => {
+    if (roundNum === 0) {
+      return "0";
+    } else if (roundNum === 1) {
+      return `${roundNum * 2.7}`;
+    } else if (roundNum === 2) {
+      return `${roundNum * 4}`;
+    } else if (roundNum === 3) {
+      return `${roundNum * 6.7}`;
+    } else if (roundNum === 4) {
+      return `${roundNum * 8}`;
+    }
+  };
+
   return (
-    <MatchupBox marginBottom={marginAmnt}>
+    <MatchupBox padding={calculateSpacing()} marginBottom={"2"}>
       <Input
         onChange={(e) => updateCurrentMatchup(e, "A")}
         placeholder="Enter player name.."
