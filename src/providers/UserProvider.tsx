@@ -20,15 +20,15 @@ export const UserContext = createContext<UserStateContext>(
 export const UserProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserState>(null);
 
-  // useEffect(() => {
-  //   console.log("queried");
-  //   auth.onAuthStateChanged(async (userAuth) => {
-  //     const user = await generateUserDocument(userAuth);
-  //     if (user) {
-  //       setUser(user);
-  //     }
-  //   });
-  // }, [auth]);
+  useEffect(() => {
+    console.log("queried");
+    auth.onAuthStateChanged(async (userAuth) => {
+      const user = await generateUserDocument(userAuth);
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, [auth]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

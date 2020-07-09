@@ -15,7 +15,11 @@ import {
 import { FormatButton } from "./FormatButton";
 import { TournamentPreview } from "./tournament-preview/TournamentPreviewContainer";
 import { TournamentOptions } from "./tournament-options/TournamentOptions";
-import { createdTournamentContext } from "../../providers/CreatedTournamentProvider";
+import {
+  createdTournamentContext,
+  defaultTournamentInfo,
+} from "../../providers/CreatedTournamentProvider";
+import { addTournament } from "./db-funcs";
 
 const formatButtons = ["Bracket", "Groups"];
 
@@ -38,10 +42,12 @@ const defaultGroupOptions: GroupOption = {
 
 export const CreateTournamentContainer = () => {
   const { user } = useContext(UserContext);
+  const { tournamentInfo, updateInfo } = useContext(createdTournamentContext);
   const [selectedFormat, setSelectedFormat] = useState<string>("Bracket");
 
   const [bracketOptions] = useState<BracketOption>(defaultBracketOptions);
   const [groupOptions] = useState<GroupOption>(defaultGroupOptions);
+  const [tourneyName, setTourneyName] = useState("");
 
   const renderFormatButtons = () => {
     return formatButtons.map((button, index) => (
@@ -62,17 +68,32 @@ export const CreateTournamentContainer = () => {
     return <TournamentOptions groupOptions={groupOptions} />;
   };
 
+  const handleSubmit = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    addTournament(user, tournamentInfo);
+
+    updateInfo(defaultTournamentInfo);
+  };
+
+  const addTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateInfo({ ...tournamentInfo, name: event.target.value });
+  };
   return (
     <Fragment>
       <ButtonContainer>
         <PageTitle>Enter Tournament Information</PageTitle>;
-        <Button>Submit</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
       </ButtonContainer>
       <TwoPartContainer>
         <FormContainer>
           <FormGroup>
             <Label>Tournament name</Label>
-            <Input type="text"></Input>
+            <Input
+              value={tournamentInfo.name}
+              onChange={addTitle}
+              type="text"
+            ></Input>
           </FormGroup>
           <FormGroup>
             <Label>Format</Label>

@@ -9,9 +9,10 @@ interface MatchupInfo {
   [key: string]: Matchups;
 }
 
-interface TournamentInfo {
+export interface TournamentInfo {
   numOfPlayers: number;
   matchupInfo: MatchupInfo;
+  name: string;
 }
 
 interface CreatedTournamentContext {
@@ -23,12 +24,14 @@ const defaultCreatedTournamentContext: CreatedTournamentContext = {
   tournamentInfo: {
     numOfPlayers: 8,
     matchupInfo: {},
+    name: "",
   },
   updateInfo: (): void => {},
 };
 
-const defaultTournamentInfo = {
+export const defaultTournamentInfo = {
   numOfPlayers: 8,
+  name: "",
   matchupInfo: {},
 };
 

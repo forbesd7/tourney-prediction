@@ -22,6 +22,7 @@ export const Matchup = (props: MatchupProps) => {
     updateInfo({
       ...tournamentInfo,
       matchupInfo: {
+        ...matchupInfo,
         [matchAndRoundNum]: {
           ...currentMatchup,
           [matchupSpot]: currentPlayerName,
