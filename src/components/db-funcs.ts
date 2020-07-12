@@ -1,7 +1,7 @@
 import firebase from "firebase";
-import { firestore } from "../../firebase";
+import { firestore } from "../firebase";
 import { User } from "firebase";
-import { TournamentInfo } from "../../providers/CreatedTournamentProvider";
+import { TournamentInfo } from "../providers/CreatedTournamentProvider";
 
 export const addTournament = async (
   user: User,
@@ -21,4 +21,17 @@ export const addTournament = async (
     userDoc.set({ createdTournaments: tournamentInfo });
   }
   console.log("entered that shit");
+};
+
+export const getTournamentsFromDB = async () => {
+  const tournamentSnapshot = await firestore.collection("tournaments").get();
+
+  const allTourneys: TournamentInfo[] = [];
+  tournamentSnapshot.docs.map((doc) =>
+    doc.data().createdTournaments.map((tournament: TournamentInfo) => {
+      allTourneys.push(tournament);
+    })
+  );
+
+  return allTourneys;
 };

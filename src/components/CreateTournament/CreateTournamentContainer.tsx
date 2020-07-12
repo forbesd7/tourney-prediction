@@ -19,7 +19,7 @@ import {
   createdTournamentContext,
   defaultTournamentInfo,
 } from "../../providers/CreatedTournamentProvider";
-import { addTournament } from "./db-funcs";
+import { addTournament } from "../db-funcs";
 
 const formatButtons = ["Bracket", "Groups"];
 
@@ -47,7 +47,6 @@ export const CreateTournamentContainer = () => {
 
   const [bracketOptions] = useState<BracketOption>(defaultBracketOptions);
   const [groupOptions] = useState<GroupOption>(defaultGroupOptions);
-  const [tourneyName, setTourneyName] = useState("");
 
   const renderFormatButtons = () => {
     return formatButtons.map((button, index) => (

@@ -5,7 +5,7 @@ interface Matchups {
   B: string;
 }
 
-interface MatchupInfo {
+export interface MatchupInfo {
   [key: string]: Matchups;
 }
 

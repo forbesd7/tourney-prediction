@@ -8,8 +8,9 @@ import { ProfilePage } from "./components/ProfilePage";
 import { Navbar } from "./components/Navbar";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
-import { Tournaments } from "./components/Tournaments";
+import { Tournaments } from "./components/Tournaments/Tournaments";
 import { CreateTournamentContainer } from "./components/CreateTournament/CreateTournamentContainer";
+import { SelectableTournament } from "./components/Tournaments/SelectableTournament";
 
 function App() {
   return (
