@@ -25,6 +25,10 @@ function App() {
             <Route path="/home" component={SignUp}></Route>
             <Route path="/tournaments" component={Tournaments}></Route>
             <Route
+              path="/tournament/:name"
+              component={SelectableTournament}
+            ></Route>
+            <Route
               path="/createTournament"
               component={CreateTournamentContainer}
             ></Route>

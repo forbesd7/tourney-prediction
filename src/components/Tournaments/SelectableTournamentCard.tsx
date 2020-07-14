@@ -14,7 +14,13 @@ export const SelectableTournamentCard = (
   const { matchupInfo, name, numOfPlayers } = props;
   return (
     <S.SelectableTournamentCard>
-      {name}
+      <StyledLink
+        to={{
+          pathname: `/tournament/${name}/asdasd`,
+        }}
+      >
+        {name}
+      </StyledLink>
 
       {numOfPlayers}
     </S.SelectableTournamentCard>
