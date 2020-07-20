@@ -6,38 +6,36 @@ import { getTournamentsFromDB } from "../db-funcs";
 import * as S from "../../styled-components/Tournaments/index";
 import { SelectableTournamentCard } from "./SelectableTournamentCard";
 import { SelectableTournament } from "./SelectableTournament";
-import { Route } from "react-router-dom";
+import { useTournaments } from "../../hooks/useTournaments";
 export const Tournaments = () => {
   const { user } = useContext(UserContext);
-  const getTournaments = async () => {
-    const tournaments = await getTournamentsFromDB();
-    setAvailableTournaments(tournaments);
-    console.log(availableTournaments);
+  const { status, data, error, isFetching } = useTournaments();
+
+  const renderTournaments = () => {
+    if (status === "loading") {
+      return <div> Loading </div>;
+    } else {
+      return (
+        <S.SelectableTournaments>
+          {data!.map((tournament) => {
+            return (
+              <SelectableTournamentCard
+                name={tournament.name}
+                matchupInfo={tournament.matchupInfo}
+                numOfPlayers={tournament.numOfPlayers}
+              />
+            );
+          })}
+        </S.SelectableTournaments>
+      );
+    }
   };
-
-  const [availableTournaments, setAvailableTournaments] = useState<
-    firebase.firestore.DocumentData[]
-  >([]);
-
-  useEffect(() => {
-    getTournaments();
-  }, [user]);
   return (
     <S.Tournaments>
       <StyledLink to="/createTournament">
         <Button>Create Tournament</Button>
       </StyledLink>
-      <S.SelectableTournaments>
-        {availableTournaments.map((tournament) => {
-          return (
-            <SelectableTournamentCard
-              name={tournament.name}
-              matchupInfo={tournament.matchupInfo}
-              numOfPlayers={tournament.numOfPlayers}
-            />
-          );
-        })}
-      </S.SelectableTournaments>
+      {renderTournaments()}
     </S.Tournaments>
   );
 };
