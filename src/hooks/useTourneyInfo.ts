@@ -3,7 +3,7 @@ import { firestore } from "../firebase";
 import { TournamentInfo } from "../providers/CreatedTournamentProvider";
 import { useQuery } from "react-query";
 
-const useTournaments = () => {
+const useTourneyInfo = () => {
   const getTourneyInfo = async (tourneyName?: string) => {
     const tournamentSnapshot = await firestore.collection("tournaments").get();
 
@@ -13,10 +13,10 @@ const useTournaments = () => {
         allTourneys.push(tournament);
       })
     );
-    console.log(allTourneys);
+
     return allTourneys;
   };
   return useQuery("getTourneys", getTourneyInfo);
 };
 
-export { useTournaments };
+export { useTourneyInfo };
