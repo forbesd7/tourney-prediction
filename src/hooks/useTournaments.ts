@@ -2,21 +2,21 @@ import React from "react";
 import { firestore } from "../firebase";
 import { TournamentInfo } from "../providers/CreatedTournamentProvider";
 import { useQuery } from "react-query";
+import firebase from "firebase";
 
 const useTournaments = () => {
-  const getTourneyInfo = async (tourneyName?: string) => {
+  const getTourneys = async (tourneyName?: string) => {
+    console.log("got tourneys");
     const tournamentSnapshot = await firestore.collection("tournaments").get();
 
-    const allTourneys: TournamentInfo[] = [];
-    tournamentSnapshot.docs.map((doc) =>
-      doc.data().createdTournaments.map((tournament: TournamentInfo) => {
-        allTourneys.push(tournament);
-      })
-    );
-    console.log(allTourneys);
+    const allTourneys: firebase.firestore.DocumentData[] = [];
+    tournamentSnapshot.docs.map((doc) => {
+      allTourneys.push({ ...doc.data(), id: doc.id });
+    });
+
     return allTourneys;
   };
-  return useQuery("getTourneys", getTourneyInfo);
+  return useQuery("getTourneys", getTourneys);
 };
 
 export { useTournaments };

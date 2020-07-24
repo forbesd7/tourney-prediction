@@ -11,9 +11,6 @@ const getNumOfMatchups = (numOfPlayers: number) => {
 };
 
 const getRoundOfNames = (num: number) => {
-  if (num === 1) {
-    return "Finals";
-  }
   return `Ro${num * 2}`;
 };
 

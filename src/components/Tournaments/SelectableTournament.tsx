@@ -7,10 +7,12 @@ import * as S from "../../styled-components/Tournaments/index";
 import { MatchupInfo } from "../../providers/CreatedTournamentProvider";
 import { RouteComponentProps } from "react-router-dom";
 import { getTourneyInfo } from "../db-funcs";
+import { useTourneyInfo } from "../../hooks/useTourneyInfo";
+import { PredictableTournament } from "../PredictableTournament/PredictableTournament";
 
 interface SelectableTournamentProps
   extends RouteComponentProps<
-    { name?: string }, // props.match.params.myParamProp
+    { id?: string }, // props.match.params.myParamProp
     any // history
   > {
   matchupInfo: string;
@@ -18,8 +20,24 @@ interface SelectableTournamentProps
   numOfPlayers: string;
 }
 export const SelectableTournament = (props: SelectableTournamentProps) => {
-  const { name } = props.match.params;
-  const tourneyInfo = getTourneyInfo(name);
-  console.log(name);
-  return <div>s</div>;
+  const { id } = props.match.params;
+  const { data, status } = useTourneyInfo(id);
+
+  const renderTournament = () => {
+    if (status === "loading") {
+      return <div>Loading...</div>;
+    } else {
+      return (
+        <div>
+          {data!.name}{" "}
+          <PredictableTournament
+            matchupInfo={data!.matchupInfo}
+            name={data!.name}
+            numOfPlayers={data!.numOfPlayers}
+          />
+        </div>
+      );
+    }
+  };
+  return <div>{renderTournament()}</div>;
 };

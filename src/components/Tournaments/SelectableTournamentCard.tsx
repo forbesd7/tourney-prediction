@@ -4,6 +4,7 @@ import * as S from "../../styled-components/Tournaments/index";
 import { MatchupInfo } from "../../providers/CreatedTournamentProvider";
 
 interface SelectableTournamentCardProps {
+  id: number;
   matchupInfo: MatchupInfo;
   name: string;
   numOfPlayers: number;
@@ -11,12 +12,12 @@ interface SelectableTournamentCardProps {
 export const SelectableTournamentCard = (
   props: SelectableTournamentCardProps
 ) => {
-  const { matchupInfo, name, numOfPlayers } = props;
+  const { id, matchupInfo, name, numOfPlayers } = props;
   return (
     <S.SelectableTournamentCard>
       <StyledLink
         to={{
-          pathname: `/tournament/${name}/asdasd`,
+          pathname: `/tournament/${id}/asdasd`,
         }}
       >
         {name}

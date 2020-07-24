@@ -3,20 +3,20 @@ import { firestore } from "../firebase";
 import { TournamentInfo } from "../providers/CreatedTournamentProvider";
 import { useQuery } from "react-query";
 
-const useTourneyInfo = () => {
-  const getTourneyInfo = async (tourneyName?: string) => {
-    const tournamentSnapshot = await firestore.collection("tournaments").get();
+interface TourneyInfo
+  extends firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>,
+    TournamentInfo {}
+const useTourneyInfo = (tourneyId?: string) => {
+  const getTourneyInfo = async () => {
+    console.log("got info");
+    const tourneyInfo = await firestore
+      .collection("tournaments")
+      .doc(tourneyId)
+      .get();
 
-    const allTourneys: TournamentInfo[] = [];
-    tournamentSnapshot.docs.map((doc) =>
-      doc.data().createdTournaments.map((tournament: TournamentInfo) => {
-        allTourneys.push(tournament);
-      })
-    );
-
-    return allTourneys;
+    return tourneyInfo.data() as TourneyInfo;
   };
-  return useQuery("getTourneys", getTourneyInfo);
+  return useQuery("getTourneyInfo", getTourneyInfo);
 };
 
 export { useTourneyInfo };

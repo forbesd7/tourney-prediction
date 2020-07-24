@@ -11,31 +11,34 @@ import { SignUp } from "./components/SignUp";
 import { Tournaments } from "./components/Tournaments/Tournaments";
 import { CreateTournamentContainer } from "./components/CreateTournament/CreateTournamentContainer";
 import { SelectableTournament } from "./components/Tournaments/SelectableTournament";
-
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styled-components/theme";
 function App() {
   return (
     <div className="App">
-      <UserProvider>
-        <CreatedTournamentProvider>
-          <Navbar />
-          <Switch>
-            <Route path="/profile" component={ProfilePage}></Route>
-            <Route path="/signIn" component={SignIn}></Route>
-            <Route path="/signUp" component={SignUp}></Route>
-            <Route path="/home" component={SignUp}></Route>
-            <Route path="/tournaments" component={Tournaments}></Route>
-            <Route
-              path="/tournament/:name"
-              component={SelectableTournament}
-            ></Route>
-            <Route
-              path="/createTournament"
-              component={CreateTournamentContainer}
-            ></Route>
-            <MainContainer />
-          </Switch>
-        </CreatedTournamentProvider>
-      </UserProvider>
+      <ThemeProvider theme={theme}>
+        <UserProvider>
+          <CreatedTournamentProvider>
+            <Navbar />
+            <Switch>
+              <Route path="/profile" component={ProfilePage}></Route>
+              <Route path="/signIn" component={SignIn}></Route>
+              <Route path="/signUp" component={SignUp}></Route>
+              <Route path="/home" component={SignUp}></Route>
+              <Route path="/tournaments" component={Tournaments}></Route>
+              <Route
+                path="/tournament/:id"
+                component={SelectableTournament}
+              ></Route>
+              <Route
+                path="/createTournament"
+                component={CreateTournamentContainer}
+              ></Route>
+              <MainContainer />
+            </Switch>
+          </CreatedTournamentProvider>
+        </UserProvider>
+      </ThemeProvider>
     </div>
   );
 }

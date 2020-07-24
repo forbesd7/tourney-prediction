@@ -8,18 +8,13 @@ export const addTournament = async (
   tournamentInfo: TournamentInfo
 ) => {
   const userId = user.uid;
-
-  const userDoc = firestore.collection("tournaments").doc(userId);
-  const userDocData = await userDoc.get();
-  if (userDocData.exists) {
-    userDoc.update({
-      createdTournaments: firebase.firestore.FieldValue.arrayUnion(
-        tournamentInfo
-      ),
-    });
-  } else {
-    userDoc.set({ createdTournaments: tournamentInfo });
-  }
+  const timeStamp = firebase.firestore.Timestamp.now();
+  const tourneyInfoWithUser = {
+    ...tournamentInfo,
+    user: userId,
+    timeStamp,
+  };
+  await firestore.collection("tournaments").add(tourneyInfoWithUser);
   console.log("entered that shit");
 };
 
