@@ -24,8 +24,11 @@ export const PredictableTournament = (props: PredictableTournamentProps) => {
             numOfPlayers,
             matchup
           );
-          console.log(rowLocation);
-          return <S.GridItem></S.GridItem>;
+          return (
+            <S.GridItem row={rowLocation} column={columnLocation}>
+              {matchupInfo[matchup]["A"]}
+            </S.GridItem>
+          );
         })}
       </S.GridContainer>
     </div>
