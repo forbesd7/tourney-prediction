@@ -12,7 +12,7 @@ export const calculateColumns = (playerNum: number) => {
 };
 
 export const calculateRows = (playerNum: number) => {
-  let frs = "";
+  let frs = "1fr ";
   while (playerNum !== 0) {
     frs += "1fr ";
     playerNum--;

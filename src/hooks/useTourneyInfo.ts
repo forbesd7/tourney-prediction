@@ -8,7 +8,6 @@ interface TourneyInfo
     TournamentInfo {}
 const useTourneyInfo = (tourneyId?: string) => {
   const getTourneyInfo = async () => {
-    console.log("got info");
     const tourneyInfo = await firestore
       .collection("tournaments")
       .doc(tourneyId)

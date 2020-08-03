@@ -6,6 +6,7 @@ import { getTournamentsFromDB } from "../db-funcs";
 import * as S from "../../styled-components/PredictableTournament/index";
 import { TournamentInfo } from "../../providers/CreatedTournamentProvider";
 import { calculateRows, calculateColumns, calculateLocation } from "./utils.";
+import { PredictableMatchup } from "./PredictableMatchup";
 interface PredictableTournamentProps extends TournamentInfo {}
 export const PredictableTournament = (props: PredictableTournamentProps) => {
   const { matchupInfo, numOfPlayers, name } = props;
@@ -26,7 +27,12 @@ export const PredictableTournament = (props: PredictableTournamentProps) => {
           );
           return (
             <S.GridItem row={rowLocation} column={columnLocation}>
-              {matchupInfo[matchup]["A"]}
+              <PredictableMatchup
+                matchups={[
+                  matchupInfo[matchup]["A"],
+                  matchupInfo[matchup]["B"],
+                ]}
+              />
             </S.GridItem>
           );
         })}
