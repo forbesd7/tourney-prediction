@@ -1,7 +1,7 @@
 export const calculateColumns = (playerNum: number) => {
   switch (playerNum) {
     case 8:
-      return "1fr 1fr 1fr";
+      return "1fr 1fr 1fr ";
     case 16:
       return "1fr 1fr 1fr 1fr";
     case 32:

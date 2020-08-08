@@ -7,7 +7,7 @@ interface GridContainerProps {
 
 const GridContainer = styled.div<GridContainerProps>`
   display: grid;
-  width: 100%;
+  width: 50%;
   height: 50vh;
   grid-template-columns: ${(props) => props.columns};
   grid-template-rows: ${(props) => props.rows};
@@ -25,7 +25,33 @@ const GridItem = styled.div<GridItemProps>`
   grid-row-start: ${(props) => props.row};
   grid-column-start: ${(props) => props.column};
   color: ${(props) => props.theme.darkBlue};
-  background-color: ${(props) => props.theme.offWhite};
 `;
 
-export { GridContainer, GridItem };
+interface PredictableMatchUpProps {
+  readonly column?: string;
+  readonly row?: string;
+}
+
+const PredictableMatchup = styled.div<PredictableMatchUpProps>`
+  background-color: ${(props) => props.theme.offWhite};
+  color: ${(props) => props.theme.darkBlue};
+  border-radius: 10px;
+  width: 80%;
+`;
+
+interface PredictableMatchupEntryProps {
+  selected?: boolean;
+  topEntry?: boolean;
+}
+const PredictableMatchupEntry = styled.div<PredictableMatchupEntryProps>`
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => (props.selected ? props.theme.darkBlue : "#ffffff")};
+    background-color: ${(props) => (props.selected ? "" : "green")};
+  }
+  border-radius: ${(props) =>
+    props.topEntry ? "10px 10px 0px 0px" : "0px 0px 10px 10px;"};
+  background-color: ${(props) => (props.selected ? "green" : "#ffffff")};
+`;
+
+export { GridContainer, GridItem, PredictableMatchup, PredictableMatchupEntry };

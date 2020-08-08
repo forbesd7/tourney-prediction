@@ -1,19 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../providers/UserProvider";
 import { Button } from "../../styled-components/General/Button";
-import StyledLink from "../../styled-components/StyledLink";
-import { getTournamentsFromDB } from "../db-funcs";
 import * as S from "../../styled-components/PredictableTournament/index";
 import { TournamentInfo } from "../../providers/CreatedTournamentProvider";
 import { calculateRows, calculateColumns, calculateLocation } from "./utils.";
 import { PredictableMatchup } from "./PredictableMatchup";
 interface PredictableTournamentProps extends TournamentInfo {}
+
 export const PredictableTournament = (props: PredictableTournamentProps) => {
   const { matchupInfo, numOfPlayers, name } = props;
 
-  const renderTournament = () => {
-    return "hi";
-  };
   return (
     <div>
       <S.GridContainer
@@ -28,15 +23,17 @@ export const PredictableTournament = (props: PredictableTournamentProps) => {
           return (
             <S.GridItem row={rowLocation} column={columnLocation}>
               <PredictableMatchup
-                matchups={[
+                matchupEntries={[
                   matchupInfo[matchup]["A"],
                   matchupInfo[matchup]["B"],
                 ]}
+                matchupRound={matchup}
               />
             </S.GridItem>
           );
         })}
       </S.GridContainer>
+      <Button>submit</Button>
     </div>
   );
 };

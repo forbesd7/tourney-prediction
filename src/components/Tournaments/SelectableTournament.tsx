@@ -29,7 +29,7 @@ export const SelectableTournament = (props: SelectableTournamentProps) => {
     } else {
       return (
         <div>
-          {data!.name}{" "}
+          {data!.name}
           <PredictableTournament
             matchupInfo={data!.matchupInfo}
             name={data!.name}
