@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "../providers/UserProvider";
-import { Button } from "../styled-components/General/Button";
+import React, { useState } from "react";
 import { NavbarComponent } from "../styled-components/Navbar/NavbarComponent";
 import StyledLink from "../styled-components/StyledLink";
 import { NavbarTitle } from "../styled-components/Navbar/NavbarTitle";
@@ -9,7 +7,6 @@ import { NavbarTitleSection } from "../styled-components/Navbar/NavbarTitleSecti
 import { DropdownContainer } from "../styled-components/Navbar/DropdownContainer";
 import { Logo } from "../styled-components/Navbar/Logo";
 export const Navbar = () => {
-  const { user } = useContext(UserContext);
   const [showMenu, setShowMenu] = useState(false);
 
   const setShowMenuFunc = (

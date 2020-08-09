@@ -9,7 +9,7 @@ interface MatchupProps {
 }
 export const Matchup = (props: MatchupProps) => {
   const { tournamentInfo, updateInfo } = useContext(createdTournamentContext);
-  const { matchupInfo, numOfPlayers } = tournamentInfo;
+  const { matchupInfo } = tournamentInfo;
   const { matchAndRoundNum, roundNum } = props;
 
   const updateCurrentMatchup = (

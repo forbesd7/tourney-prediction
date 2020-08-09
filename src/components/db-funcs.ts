@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import * as firebase from "firebase/app";
 import { firestore } from "../firebase";
 import { User } from "firebase";
 import { TournamentInfo } from "../providers/CreatedTournamentProvider";
@@ -23,7 +23,7 @@ export const getTournamentsFromDB = async () => {
 
   const allTourneys: TournamentInfo[] = [];
   tournamentSnapshot.docs.map((doc) =>
-    doc.data().createdTournaments.map((tournament: TournamentInfo) => {
+    doc.data().createdTournaments.forEach((tournament: TournamentInfo) => {
       allTourneys.push(tournament);
     })
   );
@@ -36,7 +36,7 @@ export const getTourneyInfo = async (tourneyName?: string) => {
 
   const allTourneys: TournamentInfo[] = [];
   tournamentSnapshot.docs.map((doc) =>
-    doc.data().createdTournaments.map((tournament: TournamentInfo) => {
+    doc.data().createdTournaments.forEach((tournament: TournamentInfo) => {
       allTourneys.push(tournament);
     })
   );

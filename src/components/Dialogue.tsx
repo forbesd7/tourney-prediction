@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import * as S from "../styled-components/General/index";
 interface ErrorProps {
   errorMsg: string;
   confirmAction: React.Dispatch<React.SetStateAction<boolean>>;
   showRenderConfirmation: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const Error = (props: ErrorProps) => {
+export const Dialogue = (props: ErrorProps) => {
   const { errorMsg, confirmAction, showRenderConfirmation } = props;
   const errorRef = useRef<HTMLDivElement>(null);
 

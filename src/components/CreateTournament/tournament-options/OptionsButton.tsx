@@ -1,7 +1,7 @@
 import React, { useState, useContext, Fragment, useEffect } from "react";
 import { Button } from "../../../styled-components/General/index";
 import { createdTournamentContext } from "../../../providers/CreatedTournamentProvider";
-import { Error } from "../../Error";
+import { Dialogue } from "../../Dialogue";
 
 interface OptionsButtonProps {
   option: string;
@@ -11,7 +11,7 @@ interface OptionsButtonProps {
   selectedOption: number;
 }
 export const OptionsButton = (props: OptionsButtonProps) => {
-  const { label, optionType, size, selectedOption, option } = props;
+  const { label, size, selectedOption } = props;
   const [renderConfirmation, showRenderConfirmation] = useState(false);
   const [shouldUpdateSelectedButton, setShouldUpdateSelectedButton] = useState(
     false
@@ -57,7 +57,7 @@ export const OptionsButton = (props: OptionsButtonProps) => {
       const errorMsg =
         "Changing player number will erase what you've entered. Proceed?";
       return (
-        <Error
+        <Dialogue
           showRenderConfirmation={showRenderConfirmation}
           confirmAction={setShouldUpdateSelectedButton}
           errorMsg={errorMsg}

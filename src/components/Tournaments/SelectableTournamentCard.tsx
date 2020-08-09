@@ -12,7 +12,7 @@ interface SelectableTournamentCardProps {
 export const SelectableTournamentCard = (
   props: SelectableTournamentCardProps
 ) => {
-  const { id, matchupInfo, name, numOfPlayers } = props;
+  const { id, name, numOfPlayers } = props;
   return (
     <S.SelectableTournamentCard>
       <StyledLink
@@ -25,9 +25,5 @@ export const SelectableTournamentCard = (
 
       {numOfPlayers}
     </S.SelectableTournamentCard>
-
-    //on click link to tournament with a specific link? or just normal link
-    // then update context with selectedTournament so the tournaments component can access
-    //ideally we can figure out how to pass props with router but it seems like a pain
   );
 };

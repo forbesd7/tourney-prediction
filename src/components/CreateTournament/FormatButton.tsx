@@ -1,6 +1,5 @@
-import React, { useContext, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Button } from "../../styled-components/General/index";
-import { UserContext } from "../../providers/UserProvider";
 
 interface FormatButtonProps {
   size?: string;
@@ -9,7 +8,6 @@ interface FormatButtonProps {
   setSelectedButton: React.Dispatch<React.SetStateAction<any>>;
 }
 export const FormatButton = (props: FormatButtonProps) => {
-  const { user } = useContext(UserContext);
   const { label, selectedFormat, setSelectedButton, size } = props;
 
   const checkSelectedButton = () => {

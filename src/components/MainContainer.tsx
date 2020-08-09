@@ -1,15 +1,10 @@
-import React, { useContext, Fragment } from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { SignIn } from "./SignIn";
 import { SignUp } from "./SignUp";
-import { ProfilePage } from "./ProfilePage";
 import { PasswordReset } from "./PasswordReset";
-import { UserContext } from "../providers/UserProvider";
-import { Navbar } from "./Navbar";
 
 export const MainContainer = () => {
-  const { user } = useContext(UserContext);
-
   return (
     <Fragment>
       <Router>

@@ -1,7 +1,6 @@
-import React from "react";
 import { firestore } from "../firebase";
 import { useQuery } from "react-query";
-import firebase from "firebase";
+import * as firebase from "firebase/app";
 
 const useTournaments = () => {
   const getTourneys = async (tourneyName?: string) => {
@@ -9,7 +8,7 @@ const useTournaments = () => {
     const tournamentSnapshot = await firestore.collection("tournaments").get();
 
     const allTourneys: firebase.firestore.DocumentData[] = [];
-    tournamentSnapshot.docs.map((doc) => {
+    tournamentSnapshot.docs.forEach((doc) => {
       allTourneys.push({ ...doc.data(), id: doc.id });
     });
 

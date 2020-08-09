@@ -1,5 +1,4 @@
 import React, { useContext, Fragment } from "react";
-import { UserContext } from "../../../providers/UserProvider";
 import {
   PreviewContainer,
   RoundOfContainer,
@@ -11,7 +10,6 @@ import { getNumOfMatchups, getRoundOfNames } from "../../utils";
 
 interface TournamentPreviewProps {}
 export const TournamentPreview = (props: TournamentPreviewProps) => {
-  const { user } = useContext(UserContext);
   const { tournamentInfo } = useContext(createdTournamentContext);
   const { numOfPlayers } = tournamentInfo;
 
@@ -34,7 +32,7 @@ export const TournamentPreview = (props: TournamentPreviewProps) => {
       <PreviewContainer>
         {numOfMatchups.map((num, index) => {
           return (
-            <RoundOfContainer>
+            <RoundOfContainer key={index + "previewRounds"}>
               <RoundOfTitle>{getRoundOfNames(num)}</RoundOfTitle>
               {renderMatchups(num, index)}
             </RoundOfContainer>

@@ -1,3 +1,4 @@
+import * as firebase from "firebase/app";
 import { firestore } from "../../firebase";
 import { PredictionInfo } from "../../providers/PredictionProvider";
 
@@ -25,7 +26,6 @@ export const calculateRows = (playerNum: number) => {
 
 export const calculateLocation = (numOfPlayers: number, matchup: string) => {
   const [round, position] = matchup.slice(2).split("-");
-  console.log(round, position);
   let column = "";
   let row = "";
 
@@ -71,8 +71,6 @@ export const calculateLocation = (numOfPlayers: number, matchup: string) => {
     if (column === "3") {
       row = "5";
     }
-
-    console.log(row, column);
     return [row, column];
   }
   return ["1", "2"];
@@ -80,7 +78,25 @@ export const calculateLocation = (numOfPlayers: number, matchup: string) => {
 
 export const addPrediction = async (predictionInfo: PredictionInfo) => {
   console.log("added tourney");
-  firestore.collection("predictions").add(predictionInfo);
+  const { userId } = predictionInfo;
+  const newPredictionRef = await firestore
+    .collection("predictions")
+    .add(predictionInfo);
+
+  const userDocRef = await firestore.collection("users").doc(userId);
+
+  const userDocData = (await userDocRef.get()).data();
+  if (userDocData!.predictions) {
+    userDocRef.update({
+      predictions: firebase.firestore.FieldValue.arrayUnion(
+        newPredictionRef.id
+      ),
+    });
+  } else {
+    userDocRef.update({
+      predictions: [newPredictionRef.id],
+    });
+  }
 };
 
 //calculate where in the grid the match up should land depend on round/position

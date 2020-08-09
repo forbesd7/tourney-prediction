@@ -1,4 +1,3 @@
-import React from "react";
 import { firestore } from "../firebase";
 import { TournamentInfo } from "../providers/CreatedTournamentProvider";
 import { useQuery } from "react-query";

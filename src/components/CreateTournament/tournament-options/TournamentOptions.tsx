@@ -1,5 +1,4 @@
-import React, { useContext, Fragment } from "react";
-import { UserContext } from "../../../providers/UserProvider";
+import React, { Fragment } from "react";
 import { GroupOption, BracketOption } from "../CreateTournamentContainer";
 import { OptionsButton } from "./OptionsButton";
 import {
@@ -19,7 +18,6 @@ const potentialNumForPlayers = [4, 8, 16, 32, 64];
 const potentialNumForGroups: number[] = [4, 8, 10, 12];
 
 export const TournamentOptions = (props: TournamentOptionsProps) => {
-  const { user } = useContext(UserContext);
   const { groupOptions, bracketOptions } = props;
 
   const renderButtons = () => {
