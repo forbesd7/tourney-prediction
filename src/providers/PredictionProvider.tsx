@@ -1,56 +1,47 @@
 import React, { createContext, useState, useEffect } from "react";
 
-interface Matchups {
-  A: string;
-  B: string;
+export interface MatchupPrediction {
+  [key: string]: "A" | "B";
 }
 
-export interface MatchupInfo {
-  [key: string]: Matchups;
+export interface PredictionInfo {
+  matchupPredictions: MatchupPrediction;
+  userId: string;
+  tournamentId: string;
 }
 
-export interface TournamentInfo {
-  numOfPlayers: number;
-  matchupInfo: MatchupInfo;
-  name: string;
+interface PredictionContext {
+  predictionInfo: PredictionInfo;
+  updatePredictionInfo: React.Dispatch<React.SetStateAction<PredictionInfo>>;
 }
 
-interface CreatedTournamentContext {
-  tournamentInfo: TournamentInfo;
-  updateInfo: React.Dispatch<React.SetStateAction<TournamentInfo>>;
-}
-
-const defaultCreatedTournamentContext: CreatedTournamentContext = {
-  tournamentInfo: {
-    numOfPlayers: 8,
-    matchupInfo: {},
-    name: "",
-  },
-  updateInfo: (): void => {},
+export const defaultPredictionInfo = {
+  userId: "",
+  tournamentId: "",
+  matchupPredictions: {},
 };
 
-export const defaultTournamentInfo = {
-  numOfPlayers: 8,
-  name: "",
-  matchupInfo: {},
+const defaultPredictionContext: PredictionContext = {
+  predictionInfo: defaultPredictionInfo,
+  updatePredictionInfo: (): void => {},
 };
 
-export const createdTournamentContext = createContext<CreatedTournamentContext>(
-  defaultCreatedTournamentContext
+export const predictionContext = createContext<PredictionContext>(
+  defaultPredictionContext
 );
 
-export const CreatedTournamentProvider: React.FC = ({ children }) => {
-  const [tournamentInfo, updateInfo] = useState<TournamentInfo>(
-    defaultTournamentInfo
+export const PredictionProvider: React.FC = ({ children }) => {
+  const [predictionInfo, updatePredictionInfo] = useState<PredictionInfo>(
+    defaultPredictionInfo
   );
   return (
-    <createdTournamentContext.Provider
+    <predictionContext.Provider
       value={{
-        tournamentInfo,
-        updateInfo,
+        predictionInfo,
+        updatePredictionInfo,
       }}
     >
       {children}
-    </createdTournamentContext.Provider>
+    </predictionContext.Provider>
   );
 };

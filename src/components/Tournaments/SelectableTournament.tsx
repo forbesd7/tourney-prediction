@@ -1,14 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
-import { UserContext } from "../../providers/UserProvider";
-import { Button } from "../../styled-components/General/Button";
-import StyledLink from "../../styled-components/StyledLink";
-import { getTournamentsFromDB } from "../db-funcs";
-import * as S from "../../styled-components/Tournaments/index";
-import { MatchupInfo } from "../../providers/CreatedTournamentProvider";
+import React from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { getTourneyInfo } from "../db-funcs";
 import { useTourneyInfo } from "../../hooks/useTourneyInfo";
 import { PredictableTournament } from "../PredictableTournament/PredictableTournament";
+import { PredictionProvider } from "../../providers/PredictionProvider";
 
 interface SelectableTournamentProps
   extends RouteComponentProps<
@@ -29,7 +23,7 @@ export const SelectableTournament = (props: SelectableTournamentProps) => {
     } else {
       return (
         <div>
-          {data!.name}
+          {data!.name}{" "}
           <PredictableTournament
             matchupInfo={data!.matchupInfo}
             name={data!.name}
@@ -39,5 +33,10 @@ export const SelectableTournament = (props: SelectableTournamentProps) => {
       );
     }
   };
-  return <div>{renderTournament()}</div>;
+  //put the context for predictions here and update in the matchups
+  return (
+    <PredictionProvider>
+      <div>{renderTournament()}</div>
+    </PredictionProvider>
+  );
 };

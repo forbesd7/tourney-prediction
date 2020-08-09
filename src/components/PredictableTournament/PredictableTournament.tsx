@@ -1,13 +1,27 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Button } from "../../styled-components/General/Button";
 import * as S from "../../styled-components/PredictableTournament/index";
 import { TournamentInfo } from "../../providers/CreatedTournamentProvider";
-import { calculateRows, calculateColumns, calculateLocation } from "./utils.";
+import {
+  calculateRows,
+  calculateColumns,
+  calculateLocation,
+  addPrediction,
+} from "./utils.";
 import { PredictableMatchup } from "./PredictableMatchup";
+import { predictionContext } from "../../providers/PredictionProvider";
+import { useMutation } from "react-query";
 interface PredictableTournamentProps extends TournamentInfo {}
 
 export const PredictableTournament = (props: PredictableTournamentProps) => {
   const { matchupInfo, numOfPlayers, name } = props;
+  const { predictionInfo } = useContext(predictionContext);
+
+  const [mutate] = useMutation(addPrediction);
+
+  const setUserPrediction = () => {
+    mutate(predictionInfo);
+  };
 
   return (
     <div>
@@ -33,7 +47,7 @@ export const PredictableTournament = (props: PredictableTournamentProps) => {
           );
         })}
       </S.GridContainer>
-      <Button>submit</Button>
+      <Button onClick={setUserPrediction}>submit</Button>
     </div>
   );
 };

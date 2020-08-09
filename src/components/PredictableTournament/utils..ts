@@ -1,3 +1,6 @@
+import { firestore } from "../../firebase";
+import { PredictionInfo } from "../../providers/PredictionProvider";
+
 export const calculateColumns = (playerNum: number) => {
   switch (playerNum) {
     case 8:
@@ -73,6 +76,11 @@ export const calculateLocation = (numOfPlayers: number, matchup: string) => {
     return [row, column];
   }
   return ["1", "2"];
+};
+
+export const addPrediction = async (predictionInfo: PredictionInfo) => {
+  console.log("added tourney");
+  firestore.collection("predictions").add(predictionInfo);
 };
 
 //calculate where in the grid the match up should land depend on round/position

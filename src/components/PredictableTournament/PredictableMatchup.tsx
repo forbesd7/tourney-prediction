@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as S from "../../styled-components/PredictableTournament/index";
+import { predictionContext } from "../../providers/PredictionProvider";
 
 interface PredictableMatchupProps {
   matchupEntries: string[];
@@ -8,7 +9,13 @@ interface PredictableMatchupProps {
 
 export const PredictableMatchup = (props: PredictableMatchupProps) => {
   const [A, B] = props.matchupEntries;
+  const { matchupRound } = props;
   const [selectedEntry, setSelectedEntry] = useState("");
+
+  const { predictionInfo, updatePredictionInfo } = useContext(
+    predictionContext
+  );
+
   const determineSelected = (matchupEntry: string) => {
     if (matchupEntry === selectedEntry) {
       return true;
@@ -21,6 +28,13 @@ export const PredictableMatchup = (props: PredictableMatchupProps) => {
     entry: "A" | "B"
   ) => {
     setSelectedEntry(entry);
+    updatePredictionInfo({
+      ...predictionInfo,
+      matchupPredictions: {
+        ...predictionInfo.matchupPredictions,
+        [matchupRound]: entry,
+      },
+    });
   };
 
   return (
