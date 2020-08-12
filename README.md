@@ -12,3 +12,5 @@ Making an application where users can add their predictions for tournaments and 
   - System for checking accuracy of predictions
   - System for adding points depending on accuracy of predictions (Most likely will be lambda which triggers when the tournament results are updated)
   - Leaderboard
+
+Technology being used: TypeScript, Firebase/Firestore, React, Context API/Hooks (React)
