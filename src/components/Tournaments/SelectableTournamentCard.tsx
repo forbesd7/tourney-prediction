@@ -8,16 +8,24 @@ interface SelectableTournamentCardProps {
   matchupInfo: MatchupInfo;
   name: string;
   numOfPlayers: number;
+  cardType: string;
 }
 export const SelectableTournamentCard = (
   props: SelectableTournamentCardProps
 ) => {
-  const { id, name, numOfPlayers } = props;
+  const { id, name, numOfPlayers, cardType } = props;
+
+  const determineRoute = () => {
+    if (cardType === "tournament") {
+      return "tournament";
+    }
+    return "prediction";
+  };
   return (
     <S.SelectableTournamentCard>
       <StyledLink
         to={{
-          pathname: `/tournament/${id}/asdasd`,
+          pathname: `/${determineRoute()}/${id}/asdasd`,
         }}
       >
         {name}

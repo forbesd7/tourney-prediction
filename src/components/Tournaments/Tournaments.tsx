@@ -16,6 +16,7 @@ export const Tournaments = () => {
           {data!.map((tournament, index) => {
             return (
               <SelectableTournamentCard
+                cardType="tournament"
                 key={tournament.id + index}
                 id={tournament.id}
                 name={tournament.name}
