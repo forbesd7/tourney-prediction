@@ -8,11 +8,7 @@ interface SelectableTournamentProps
   extends RouteComponentProps<
     { id: string }, // props.match.params.myParamProp
     any // history
-  > {
-  matchupInfo: string;
-  name: string;
-  numOfPlayers: string;
-}
+  > {}
 export const SelectableTournament = (props: SelectableTournamentProps) => {
   const { id } = props.match.params;
   const { data, status } = useTourneyInfo(id);
@@ -34,7 +30,6 @@ export const SelectableTournament = (props: SelectableTournamentProps) => {
       );
     }
   };
-  //put the context for predictions here and update in the matchups
   return (
     <PredictionProvider>
       <div>{renderTournament()}</div>

@@ -4,7 +4,7 @@ import { MainContainer } from "./components/MainContainer";
 import { UserProvider } from "./providers/UserProvider";
 import { CreatedTournamentProvider } from "./providers/CreatedTournamentProvider";
 import { Switch, Route } from "react-router-dom";
-import { ProfilePage } from "./components/ProfilePage";
+import { ProfilePage } from "./components/ProfilePage/ProfilePage";
 import { Navbar } from "./components/Navbar";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
@@ -21,7 +21,7 @@ function App() {
           <CreatedTournamentProvider>
             <Navbar />
             <Switch>
-              <Route path="/profile" component={ProfilePage}></Route>
+              <Route path="/profile/:id" component={ProfilePage}></Route>
               <Route path="/signIn" component={SignIn}></Route>
               <Route path="/signUp" component={SignUp}></Route>
               <Route path="/home" component={SignUp}></Route>

@@ -32,8 +32,9 @@ const PredictableTournament = (props: PredictableTournamentProps) => {
     setShowDialogue(true);
   };
   const redirectUser = () => {
-    history.push("/profile");
+    history.push(`/profile/${user.uid}`);
   };
+
   useEffect(() => {
     if (shouldAddPrediction) {
       mutate({ ...predictionInfo, userId: user.uid, tournamentId });

@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 interface TourneyInfo
   extends firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>,
     TournamentInfo {}
+
 const useTourneyInfo = (tourneyId?: string) => {
   const getTourneyInfo = async () => {
     const tourneyInfo = await firestore

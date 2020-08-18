@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import * as firebase from "firebase/app";
 
 const useTournaments = () => {
-  const getTourneys = async (tourneyName?: string) => {
+  const getTourneys = async () => {
     console.log("got tourneys");
     const tournamentSnapshot = await firestore.collection("tournaments").get();
 
