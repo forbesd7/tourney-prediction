@@ -1,16 +1,36 @@
-import React from "react";
-import { MatchupPrediction } from "../../providers/PredictionProvider";
+import React, { useEffect } from "react";
+import { UserPredictionInfo } from "../../hooks/useProfilePage";
+import { SelectableTournamentCard } from "../Tournaments/SelectableTournamentCard";
+import * as S from "../../styled-components/Tournaments/index";
 
 interface PredictionsContainerProps {
-  predictions: MatchupPrediction[];
+  predictions?: UserPredictionInfo[];
 }
 
 export const PredictionsContainer = (props: PredictionsContainerProps) => {
   const { predictions } = props;
-
+  useEffect(() => {
+    console.log(predictions);
+  }, []);
   const renderPredictionCards = () => {
-    return <>{predictions.map((prediction, index) => {})}</>;
+    return (
+      <S.SelectableTournaments>
+        {predictions?.map((prediction, index) => {
+          return (
+            <SelectableTournamentCard
+              cardType="prediction"
+              key={prediction.id + index}
+              id={prediction.id}
+              name={"hi"}
+              numOfPlayers={2}
+            />
+          );
+        })}
+      </S.SelectableTournaments>
+    );
   };
 
-  return <div>{renderPredictionCards()}</div>;
+  return <S.Tournaments>{renderPredictionCards()}</S.Tournaments>;
 };
+
+// why does console.log just in the function get called three times, but its only rendered once

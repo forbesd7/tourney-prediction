@@ -20,7 +20,6 @@ export const Tournaments = () => {
                 key={tournament.id + index}
                 id={tournament.id}
                 name={tournament.name}
-                matchupInfo={tournament.matchupInfo}
                 numOfPlayers={tournament.numOfPlayers}
               />
             );
