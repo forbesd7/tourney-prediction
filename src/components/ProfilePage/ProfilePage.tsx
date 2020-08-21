@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { RouteComponentProps } from "react-router";
-import { useProfile } from "../../hooks/useProfilePage";
+import { usePredictions } from "../../hooks/usePredictions";
 import { MatchupPrediction } from "../../providers/PredictionProvider";
 import { PredictionsContainer } from "./PredictionsContainer";
 
@@ -12,12 +12,12 @@ export const ProfilePage = (props: ProfilePageProps) => {
 
   const { id } = props.match.params;
 
-  const { data, status } = useProfile(id);
+  const { data, status } = usePredictions(id);
 
-  const photoUrl = data?.photoURL;
-  const displayName = data?.displayName;
-  const email = data?.email;
-  const predictions = data?.predictions;
+  const displayName = user?.displayName;
+
+  const predictions = data;
+
   const renderProfile = () => {
     if (status === "loading") {
       return <div>Loading</div>;

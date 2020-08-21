@@ -2,18 +2,14 @@ import React, { useContext, useState, useEffect } from "react";
 import { Button } from "../../styled-components/General/Button";
 import * as S from "../../styled-components/PredictableTournament/index";
 import { TournamentInfo } from "../../providers/CreatedTournamentProvider";
-import {
-  calculateRows,
-  calculateColumns,
-  calculateLocation,
-  addPrediction,
-} from "./utils.";
+import { calculateRows, calculateColumns, calculateLocation } from "./utils.";
 import { PredictableMatchup } from "./PredictableMatchup";
 import { predictionContext } from "../../providers/PredictionProvider";
 import { UserContext } from "../../providers/UserProvider";
 import { useMutation } from "react-query";
 import { Dialogue } from "../Dialogue";
 import { useHistory } from "react-router-dom";
+import { useCreatePrediction } from "../../hooks/useCreatePrediction";
 interface PredictableTournamentProps extends TournamentInfo {
   tournamentId: string;
 }
@@ -26,7 +22,7 @@ const PredictableTournament = (props: PredictableTournamentProps) => {
   const [shouldAddPrediction, setShouldAddPrediction] = useState(false);
   const { user } = useContext(UserContext);
 
-  const [mutate] = useMutation(addPrediction);
+  const [mutate] = useCreatePrediction();
 
   const setUserPrediction = () => {
     setShowDialogue(true);

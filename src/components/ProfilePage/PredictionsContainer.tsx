@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { UserPredictionInfo } from "../../hooks/useProfilePage";
+import { UserPredictionInfo } from "../../hooks/usePredictions";
 import { SelectableTournamentCard } from "../Tournaments/SelectableTournamentCard";
 import * as S from "../../styled-components/Tournaments/index";
 

@@ -75,28 +75,3 @@ export const calculateLocation = (numOfPlayers: number, matchup: string) => {
   }
   return ["1", "2"];
 };
-
-export const addPrediction = async (predictionInfo: PredictionInfo) => {
-  console.log("added tourney");
-  const { userId } = predictionInfo;
-  const newPredictionRef = await firestore
-    .collection("predictions")
-    .add(predictionInfo);
-
-  const userDocRef = await firestore.collection("users").doc(userId);
-
-  const userDocData = (await userDocRef.get()).data();
-  if (userDocData!.predictions) {
-    userDocRef.update({
-      predictions: firebase.firestore.FieldValue.arrayUnion(
-        newPredictionRef.id
-      ),
-    });
-  } else {
-    userDocRef.update({
-      predictions: [newPredictionRef.id],
-    });
-  }
-};
-
-//calculate where in the grid the match up should land depend on round/position
