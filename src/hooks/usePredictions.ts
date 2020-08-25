@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { firestore } from "../firebase";
-import { useQuery } from "react-query";
+import { usePaginatedQuery } from "react-query";
 import { MatchupPrediction } from "../providers/PredictionProvider";
 
 export interface UserPredictionInfo {
@@ -14,35 +15,50 @@ export interface UserInfo {
   email: string;
   photoURL: string;
 }
-const usePredictions = (profileId: string, page?: number) => {
-  const getPredictions = async () => {
-    const firstQuery = await firestore
+const usePredictions = (profileId: string, page: number) => {
+  const [lastDoc, setLastDoc] = useState<
+    firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
+  >();
+  const getPredictions = async (key: any, page: any) => {
+    let userPredictions;
+    console.log(page);
+    const firstQuery = firestore
       .collection("predictions")
       .where("userId", "==", `${profileId}`)
       .limit(5);
 
-    const snapshot = await firstQuery.get();
+    if (page === 0) {
+      userPredictions = await firstQuery.get();
+    } else {
+      const nextQuery = firestore
+        .collection("predictions")
+        .where("userId", "==", `${profileId}`)
+        .startAfter(lastDoc)
+        .limit(5);
 
-    const last = snapshot.docs[snapshot.docs.length - 1];
+      userPredictions = await nextQuery.get();
+    }
 
-    const next = firestore
-      .collection("predictions")
-      .where("userId", "==", `${profileId}`)
-      .limit(5);
+    const putPredictionsIntoArr = (predictions: any) => {
+      const userPredictionsArr: UserPredictionInfo[] = [];
 
-    const userPredictionsArr: UserPredictionInfo[] = [];
+      predictions.forEach((predictionInfo: any) => {
+        userPredictionsArr.push({
+          ...predictionInfo.data(),
+          id: predictionInfo.id,
+        } as UserPredictionInfo);
+      });
 
-    userPredictions.forEach((predictionInfo) => {
-      userPredictionsArr.push({
-        ...predictionInfo.data(),
-        id: predictionInfo.id,
-      } as UserPredictionInfo);
-    });
+      return userPredictionsArr;
+    };
 
-    return userPredictionsArr;
+    const last = userPredictions.docs[userPredictions.docs.length - 1];
+    setLastDoc(last);
+    console.log(putPredictionsIntoArr(userPredictions));
+    return putPredictionsIntoArr(userPredictions);
   };
 
-  return useQuery("predictions", getPredictions);
+  return usePaginatedQuery(["predictions", page], getPredictions);
 };
 
 export { usePredictions };

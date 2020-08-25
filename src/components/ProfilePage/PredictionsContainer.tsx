@@ -21,7 +21,7 @@ export const PredictionsContainer = (props: PredictionsContainerProps) => {
               cardType="prediction"
               key={prediction.id + index}
               id={prediction.id}
-              name={"hi"}
+              name={prediction.id}
               numOfPlayers={2}
             />
           );
