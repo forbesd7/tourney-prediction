@@ -9,7 +9,7 @@ interface ProfilePageProps extends RouteComponentProps<{ id: string }, any> {}
 
 export const ProfilePage = (props: ProfilePageProps) => {
   const { user } = useContext(UserContext);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const { id } = props.match.params;
 
@@ -22,7 +22,7 @@ export const ProfilePage = (props: ProfilePageProps) => {
   };
 
   const nextPageHandler = () => {
-    setPage((old) => (!latestData ? old : old + 1));
+    setPage((old) => (!latestData || latestData.noMoreData ? old : old + 1));
   };
 
   const renderProfile = () => {
@@ -35,7 +35,7 @@ export const ProfilePage = (props: ProfilePageProps) => {
         <button onClick={previousPageHandler}>Previous page</button>
         <span>{page}</span>
         <button onClick={nextPageHandler}> Next page</button>
-        <PredictionsContainer predictions={resolvedData} />
+        <PredictionsContainer predictions={resolvedData?.items} />
       </div>
     );
   };
