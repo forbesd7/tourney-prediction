@@ -10,9 +10,10 @@ import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { Tournaments } from "./components/Tournaments/Tournaments";
 import { CreateTournamentContainer } from "./components/CreateTournament/CreateTournamentContainer";
-import { SelectableTournament } from "./components/Tournaments/SelectableTournament";
+import { PredictableTournamentContainer } from "./components/PredictableTournament/PredictableTournamentContainer";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./styled-components/theme";
+import ViewablePrediction from "./components/Tournaments/ViewablePrediction";
 function App() {
   return (
     <div className="App">
@@ -27,8 +28,12 @@ function App() {
               <Route path="/home" component={SignUp}></Route>
               <Route path="/tournaments" component={Tournaments}></Route>
               <Route
+                path="/prediction/:id"
+                component={ViewablePrediction}
+              ></Route>
+              <Route
                 path="/tournament/:id"
-                component={SelectableTournament}
+                component={PredictableTournamentContainer}
               ></Route>
               <Route
                 path="/createTournament"

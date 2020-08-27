@@ -9,9 +9,7 @@ interface PredictionsContainerProps {
 
 export const PredictionsContainer = (props: PredictionsContainerProps) => {
   const { predictions } = props;
-  useEffect(() => {
-    console.log(predictions);
-  }, []);
+
   const renderPredictionCards = () => {
     return (
       <S.SelectableTournaments>

@@ -1,7 +1,7 @@
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useTourneyInfo } from "../../hooks/useTourneyInfo";
-import PredictableTournament from "../PredictableTournament/PredictableTournament";
+import PredictableTournament from "./PredictableTournament";
 import { PredictionProvider } from "../../providers/PredictionProvider";
 
 interface SelectableTournamentProps
@@ -9,7 +9,9 @@ interface SelectableTournamentProps
     { id: string }, // props.match.params.myParamProp
     any // history
   > {}
-export const SelectableTournament = (props: SelectableTournamentProps) => {
+export const PredictableTournamentContainer = (
+  props: SelectableTournamentProps
+) => {
   const { id } = props.match.params;
   const { data, status } = useTourneyInfo(id);
 
