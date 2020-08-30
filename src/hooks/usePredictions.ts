@@ -24,13 +24,16 @@ const usePredictions = (profileId: string, page: number) => {
   const [lastDoc, setLastDoc] = useState<
     firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
   >();
+
   const [firstDoc, setFirstDoc] = useState<
     firebase.firestore.QueryDocumentSnapshot<firebase.firestore.DocumentData>
   >();
+
   const [curPage, setCurPage] = useState(1);
 
   const getPredictions = async (key: any, page: any) => {
     let userPredictions;
+
     const firstQuery = firestore
       .collection("predictions")
       .where("userId", "==", `${profileId}`)

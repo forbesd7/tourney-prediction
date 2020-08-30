@@ -17,8 +17,9 @@ export const PredictionsContainer = (props: PredictionsContainerProps) => {
           return (
             <SelectableTournamentCard
               cardType="prediction"
+              predictionId={prediction.id}
               key={prediction.id + index}
-              id={prediction.id}
+              id={prediction.tournamentId}
               name={prediction.id}
               numOfPlayers={2}
             />

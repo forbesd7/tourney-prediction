@@ -7,17 +7,18 @@ interface SelectableTournamentCardProps {
   name: string;
   numOfPlayers: number;
   cardType: string;
+  predictionId?: string;
 }
 export const SelectableTournamentCard = (
   props: SelectableTournamentCardProps
 ) => {
-  const { id, name, numOfPlayers, cardType } = props;
+  const { id, name, numOfPlayers, cardType, predictionId } = props;
 
   const determineRoute = () => {
     if (cardType === "tournament") {
       return "tournament";
     }
-    return "prediction";
+    return `prediction/${predictionId}`;
   };
   return (
     <S.SelectableTournamentCard>
