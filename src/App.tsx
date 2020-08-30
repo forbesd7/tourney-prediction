@@ -14,6 +14,7 @@ import { PredictableTournamentContainer } from "./components/PredictableTourname
 import { ThemeProvider } from "styled-components";
 import { theme } from "./styled-components/theme";
 import ViewablePrediction from "./components/ViewablePrediction/ViewablePrediction";
+import { TournamentResults } from "./components/TournamentResults/TournamentResults";
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,10 @@ function App() {
               <Route path="/signUp" component={SignUp}></Route>
               <Route path="/home" component={SignUp}></Route>
               <Route path="/tournaments" component={Tournaments}></Route>
+              <Route
+                path="/tournament-results/:tournamentId"
+                component={TournamentResults}
+              ></Route>
               <Route
                 path="/prediction/:predictionId/:tournamentId"
                 component={ViewablePrediction}

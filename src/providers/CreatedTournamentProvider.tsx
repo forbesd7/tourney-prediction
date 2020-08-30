@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { MatchupPrediction } from "./PredictionProvider";
 
 interface Matchups {
   A: string;
@@ -13,6 +14,7 @@ export interface TournamentInfo {
   numOfPlayers: number;
   matchupInfo: MatchupInfo;
   name: string;
+  results?: MatchupPrediction;
 }
 
 interface CreatedTournamentContext {
@@ -20,19 +22,16 @@ interface CreatedTournamentContext {
   updateInfo: React.Dispatch<React.SetStateAction<TournamentInfo>>;
 }
 
-const defaultCreatedTournamentContext: CreatedTournamentContext = {
-  tournamentInfo: {
-    numOfPlayers: 8,
-    matchupInfo: {},
-    name: "",
-  },
-  updateInfo: (): void => {},
-};
-
 export const defaultTournamentInfo = {
   numOfPlayers: 8,
   name: "",
   matchupInfo: {},
+  results: {},
+};
+
+const defaultCreatedTournamentContext: CreatedTournamentContext = {
+  tournamentInfo: defaultTournamentInfo,
+  updateInfo: (): void => {},
 };
 
 export const createdTournamentContext = createContext<CreatedTournamentContext>(

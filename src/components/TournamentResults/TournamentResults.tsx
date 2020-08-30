@@ -1,58 +1,62 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { Button } from "../../styled-components/General/Button";
 import * as S from "../../styled-components/PredictableTournament/index";
 import {
   calculateRows,
   calculateColumns,
   calculateLocation,
 } from "../PredictableTournament/utils.";
-import { ViewableMatchup } from "./ViewableMatchup";
 import { RouteComponentProps } from "react-router-dom";
 import { useTourneyInfo } from "../../hooks/useTourneyInfo";
-import { usePredictionInfo } from "../../hooks/usePredictionInfo";
-interface ViewablePredictionProps
+import { ResultsMatchup } from "./ResultsMatchup";
+
+interface TournamentResultsProps
   extends RouteComponentProps<
-    { tournamentId: string; predictionId: string }, // props.match.params.myParamProp
+    { tournamentId: string }, // props.match.params.myParamProp
     any // history
   > {}
-const ViewablePrediction = (props: ViewablePredictionProps) => {
-  const { tournamentId, predictionId } = props.match.params;
-  const predictionData = usePredictionInfo(predictionId).data;
-  const predictionStatus = usePredictionInfo(predictionId).status;
+export const TournamentResults = (props: TournamentResultsProps) => {
+  const { tournamentId } = props.match.params;
+
   const tourneyData = useTourneyInfo(tournamentId).data;
   const tourneyStatus = useTourneyInfo(tournamentId).status;
   if (tourneyStatus === "loading") return <div>loading</div>;
-  if (predictionStatus === "loading") return <div>loading</div>;
 
-  return (
+  return tourneyData ? (
     <div>
       <S.GridContainer
-        rows={calculateRows(tourneyData!.numOfPlayers)}
-        columns={calculateColumns(tourneyData!.numOfPlayers)}
+        rows={calculateRows(tourneyData.numOfPlayers)}
+        columns={calculateColumns(tourneyData.numOfPlayers)}
       >
         {Object.keys(tourneyData!.matchupInfo).map((matchup, index) => {
           const [rowLocation, columnLocation] = calculateLocation(
-            tourneyData!.numOfPlayers,
+            tourneyData.numOfPlayers,
             matchup
           );
+
+          const matchupResult = tourneyData.results
+            ? tourneyData.results[matchup]
+            : "";
+
           return (
             <S.GridItem
               key={matchup + index + "predict"}
               row={rowLocation}
               column={columnLocation}
             >
-              <ViewableMatchup
+              <ResultsMatchup
                 matchupEntries={[
-                  tourneyData!.matchupInfo[matchup]["A"],
-                  tourneyData!.matchupInfo[matchup]["B"],
+                  tourneyData.matchupInfo[matchup]["A"],
+                  tourneyData.matchupInfo[matchup]["B"],
                 ]}
-                matchupPrediction={predictionData!.matchupPredictions[matchup]}
+                matchupResult={matchupResult}
               />
             </S.GridItem>
           );
         })}
       </S.GridContainer>
     </div>
+  ) : (
+    <div>loading</div>
   );
 };
-
-export default ViewablePrediction;

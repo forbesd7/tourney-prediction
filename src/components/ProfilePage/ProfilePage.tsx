@@ -2,9 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../providers/UserProvider";
 import { RouteComponentProps } from "react-router";
 import { usePredictions } from "../../hooks/usePredictions";
-import { MatchupPrediction } from "../../providers/PredictionProvider";
 import { PredictionsContainer } from "./PredictionsContainer";
-import { queryCache } from "react-query";
 interface ProfilePageProps extends RouteComponentProps<{ id: string }, any> {}
 
 export const ProfilePage = (props: ProfilePageProps) => {
