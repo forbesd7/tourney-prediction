@@ -18,10 +18,16 @@ interface TournamentResultsProps
 export const TournamentResults = (props: TournamentResultsProps) => {
   const { tournamentId } = props.match.params;
 
+  const [results, setResults] = useState({});
   const tourneyData = useTourneyInfo(tournamentId).data;
   const tourneyStatus = useTourneyInfo(tournamentId).status;
-  if (tourneyStatus === "loading") return <div>loading</div>;
 
+  const updateResults = (matchupRound: string, selectedResult: "A" | "B") => {
+    setResults({ ...results, [matchupRound]: selectedResult });
+  };
+  if (tourneyStatus === "loading") return <div>loading</div>;
+  console.log(results);
+  const submitResults = () => {};
   return tourneyData ? (
     <div>
       <S.GridContainer
@@ -45,16 +51,19 @@ export const TournamentResults = (props: TournamentResultsProps) => {
               column={columnLocation}
             >
               <ResultsMatchup
+                updateResults={updateResults}
                 matchupEntries={[
                   tourneyData.matchupInfo[matchup]["A"],
                   tourneyData.matchupInfo[matchup]["B"],
                 ]}
                 matchupResult={matchupResult}
+                matchup={matchup}
               />
             </S.GridItem>
           );
         })}
       </S.GridContainer>
+      <Button onClick={submitResults}>Submit</Button>
     </div>
   ) : (
     <div>loading</div>

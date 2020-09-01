@@ -44,6 +44,10 @@ function App() {
                 path="/createTournament"
                 component={CreateTournamentContainer}
               ></Route>
+              <Route
+                path="/results/:tournamentId"
+                component={TournamentResults}
+              ></Route>
               <MainContainer />
             </Switch>
           </CreatedTournamentProvider>

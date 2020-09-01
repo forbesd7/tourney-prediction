@@ -4,17 +4,24 @@ import * as S from "../../styled-components/TournamentResults/index";
 
 interface PredictableMatchupProps {
   matchupEntries: string[];
-  matchupResult?: string;
+  matchupResult?: "A" | "B" | "";
+  updateResults: (matchupRound: string, selectedResult: "A" | "B") => void;
+  matchup: string;
 }
 
 export const ResultsMatchup = (props: PredictableMatchupProps) => {
   const [A, B] = props.matchupEntries;
-  const { matchupResult } = props;
+  const { matchupResult, updateResults, matchup } = props;
   const [selectedEntry, setSelectedEntry] = useState("");
-  const resultExists = matchupResult !== "";
-
-  const determineSelected = (matchupEntry: string) => {
+  const resultExists = matchupResult !== undefined;
+  const determinePredicted = (matchupEntry: string) => {
     if (matchupEntry === matchupResult) {
+      return true;
+    }
+    return false;
+  };
+  const determineSelected = (matchupEntry: string) => {
+    if (matchupEntry === selectedEntry) {
       return true;
     }
     return false;
@@ -24,30 +31,44 @@ export const ResultsMatchup = (props: PredictableMatchupProps) => {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     entry: "A" | "B"
   ) => {
-    if (resultExists) return;
-    console.log(entry);
+    setSelectedEntry(entry);
+    updateResults(matchup, entry);
   };
 
-  //make a new styled component called PredictedEntry
-  // use that one if there is a prediction
-  //otherwise use the other one you can hover
-  return (
-    <PS.PredictableMatchup>
-      <S.TournamentResultMatchupEntry
-        predicted={resultExists}
-        onClick={(e) => handleClick(e, "A")}
-        selected={determineSelected("A")}
-        topEntry
-      >
-        {A}
-      </S.TournamentResultMatchupEntry>
-      <S.TournamentResultMatchupEntry
-        predicted={resultExists}
-        onClick={(e) => handleClick(e, "B")}
-        selected={determineSelected("B")}
-      >
-        {B}
-      </S.TournamentResultMatchupEntry>
-    </PS.PredictableMatchup>
-  );
+  const renderMatchups = () => {
+    if (resultExists) {
+      return (
+        <PS.PredictableMatchup>
+          <S.TournamentResultMatchupEntry
+            predicted={determinePredicted("A")}
+            topEntry
+          >
+            {A}
+          </S.TournamentResultMatchupEntry>
+          <S.TournamentResultMatchupEntry predicted={determinePredicted("B")}>
+            {B}
+          </S.TournamentResultMatchupEntry>
+        </PS.PredictableMatchup>
+      );
+    }
+
+    return (
+      <PS.PredictableMatchup>
+        <PS.PredictableMatchupEntry
+          onClick={(e) => handleClick(e, "A")}
+          topEntry
+          selected={determineSelected("A")}
+        >
+          {A}
+        </PS.PredictableMatchupEntry>
+        <PS.PredictableMatchupEntry
+          onClick={(e) => handleClick(e, "B")}
+          selected={determineSelected("B")}
+        >
+          {B}
+        </PS.PredictableMatchupEntry>
+      </PS.PredictableMatchup>
+    );
+  };
+  return <>{renderMatchups()}</>;
 };
