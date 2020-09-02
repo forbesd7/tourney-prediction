@@ -21,5 +21,6 @@ const SelectableTournamentCard = styled.div`
   background-color: #ffffff;
   color: blue;
   padding: 2em;
+  flex-direction: column;
 `;
 export { SelectableTournamentCard, Tournaments, SelectableTournaments };

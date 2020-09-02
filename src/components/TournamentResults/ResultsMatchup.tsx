@@ -4,7 +4,7 @@ import * as S from "../../styled-components/TournamentResults/index";
 
 interface PredictableMatchupProps {
   matchupEntries: string[];
-  matchupResult?: "A" | "B" | "";
+  matchupResult?: "A" | "B";
   updateResults: (matchupRound: string, selectedResult: "A" | "B") => void;
   matchup: string;
 }

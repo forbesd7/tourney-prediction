@@ -22,13 +22,24 @@ export const SelectableTournamentCard = (
   };
   return (
     <S.SelectableTournamentCard>
-      <StyledLink
-        to={{
-          pathname: `/${determineRoute()}/${id}`,
-        }}
-      >
-        {name}
-      </StyledLink>
+      <div>
+        <StyledLink
+          to={{
+            pathname: `/${determineRoute()}/${id}`,
+          }}
+        >
+          {name}
+        </StyledLink>
+      </div>
+      <div>
+        <StyledLink
+          to={{
+            pathname: `/results/${id}`,
+          }}
+        >
+          Results
+        </StyledLink>
+      </div>
 
       {numOfPlayers}
     </S.SelectableTournamentCard>

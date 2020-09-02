@@ -9,6 +9,9 @@ import {
 import { RouteComponentProps } from "react-router-dom";
 import { useTourneyInfo } from "../../hooks/useTourneyInfo";
 import { ResultsMatchup } from "./ResultsMatchup";
+import { useCreateResult } from "../../hooks/useCreateResult";
+import { PredictionInfo } from "../../providers/PredictionProvider";
+import { Dialogue } from "../Dialogue";
 
 interface TournamentResultsProps
   extends RouteComponentProps<
@@ -18,54 +21,93 @@ interface TournamentResultsProps
 export const TournamentResults = (props: TournamentResultsProps) => {
   const { tournamentId } = props.match.params;
 
-  const [results, setResults] = useState({});
+  const [renderConfirmation, showRenderConfirmation] = useState(false);
+  const [shouldUpdateResults, setShouldUpdateResults] = useState(false);
+
+  const [results, setResults] = useState<PredictionInfo>({} as PredictionInfo);
   const tourneyData = useTourneyInfo(tournamentId).data;
   const tourneyStatus = useTourneyInfo(tournamentId).status;
+  const [mutate] = useCreateResult();
+
+  useEffect(() => {
+    if (shouldUpdateResults === true) {
+      submitResults();
+
+      setShouldUpdateResults(false);
+    }
+  }, [shouldUpdateResults]);
 
   const updateResults = (matchupRound: string, selectedResult: "A" | "B") => {
-    setResults({ ...results, [matchupRound]: selectedResult });
+    setResults({
+      ...results,
+      [matchupRound]: selectedResult,
+    } as PredictionInfo);
   };
+
   if (tourneyStatus === "loading") return <div>loading</div>;
-  console.log(results);
-  const submitResults = () => {};
-  return tourneyData ? (
+
+  const submitResults = () => {
+    const resultsWithId = { results, tournamentId };
+    mutate(resultsWithId);
+  };
+
+  const shouldRenderConfirmation = () => {
+    if (renderConfirmation) {
+      const confirmationMessage =
+        "This will permanently update the results. Proceed?";
+      return (
+        <Dialogue
+          showRenderConfirmation={showRenderConfirmation}
+          confirmAction={setShouldUpdateResults}
+          errorMsg={confirmationMessage}
+        />
+      );
+    }
+  };
+
+  return (
     <div>
-      <S.GridContainer
-        rows={calculateRows(tourneyData.numOfPlayers)}
-        columns={calculateColumns(tourneyData.numOfPlayers)}
-      >
-        {Object.keys(tourneyData!.matchupInfo).map((matchup, index) => {
-          const [rowLocation, columnLocation] = calculateLocation(
-            tourneyData.numOfPlayers,
-            matchup
-          );
+      {tourneyData ? (
+        <div>
+          <S.GridContainer
+            rows={calculateRows(tourneyData.numOfPlayers)}
+            columns={calculateColumns(tourneyData.numOfPlayers)}
+          >
+            {Object.keys(tourneyData!.matchupInfo).map((matchup, index) => {
+              const [rowLocation, columnLocation] = calculateLocation(
+                tourneyData.numOfPlayers,
+                matchup
+              );
 
-          const matchupResult = tourneyData.results
-            ? tourneyData.results[matchup]
-            : "";
+              const matchupResult = tourneyData.results
+                ? tourneyData.results[matchup]
+                : undefined;
 
-          return (
-            <S.GridItem
-              key={matchup + index + "predict"}
-              row={rowLocation}
-              column={columnLocation}
-            >
-              <ResultsMatchup
-                updateResults={updateResults}
-                matchupEntries={[
-                  tourneyData.matchupInfo[matchup]["A"],
-                  tourneyData.matchupInfo[matchup]["B"],
-                ]}
-                matchupResult={matchupResult}
-                matchup={matchup}
-              />
-            </S.GridItem>
-          );
-        })}
-      </S.GridContainer>
-      <Button onClick={submitResults}>Submit</Button>
+              return (
+                <S.GridItem
+                  key={matchup + index + "predict"}
+                  row={rowLocation}
+                  column={columnLocation}
+                >
+                  <ResultsMatchup
+                    updateResults={updateResults}
+                    matchupEntries={[
+                      tourneyData.matchupInfo[matchup]["A"],
+                      tourneyData.matchupInfo[matchup]["B"],
+                    ]}
+                    matchupResult={matchupResult}
+                    matchup={matchup}
+                  />
+                </S.GridItem>
+              );
+            })}
+          </S.GridContainer>
+          <Button onClick={() => showRenderConfirmation(true)}>Submit</Button>
+        </div>
+      ) : (
+        <div>loading</div>
+      )}
+      {shouldRenderConfirmation()}
     </div>
-  ) : (
-    <div>loading</div>
   );
 };
