@@ -20,7 +20,7 @@ const useCreateResult = () => {
 
     tourneyDocRef.update({
       results: { ...savedResults, ...userReportedResults },
-      updatedData: firebase.firestore.Timestamp.now(),
+      updatedDate: firebase.firestore.Timestamp.now(),
     });
   };
 
