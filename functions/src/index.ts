@@ -7,6 +7,7 @@ admin.initializeApp();
 export const allocatePointsOnResultUpdate = functions.firestore
   .document("/tournaments/{documentId}")
   .onUpdate(async (change, context) => {
+    const tournamentId = change.before.id;
     const beforeFields = change.before.data();
     const updatedFields = change.after.data();
     if (
@@ -14,39 +15,39 @@ export const allocatePointsOnResultUpdate = functions.firestore
       !_.isEqual(beforeFields.results, updatedFields.results)
     ) {
       const newResults = updatedFields.results;
-      const tournamentId = updatedFields.tournamentId;
       await updateAccuracyForUsers(tournamentId, newResults);
-      await admin
-        .firestore()
-        .collection("messages")
-        .add({ data: "whatthefuck" });
+      await admin.firestore().collection("messages").add({ data: "a" });
     }
   });
 
 const updateAccuracyForUsers = async (tournamentId: string, results: any) => {
+  console.log("tourney id", tournamentId);
   const predictionDocRefs = await admin
     .firestore()
     .collection("predictions")
     .where("tournamentId", "==", `${tournamentId}`)
     .get();
 
-  let batch = admin.firestore().batch();
+  const batch = admin.firestore().batch();
 
   predictionDocRefs.docs.forEach(async (doc) => {
     const docRef = admin.firestore().collection("predictions").doc(doc.id);
     const predictionData = (await docRef.get()) as any;
     const userPredictions = predictionData.matchupPredictions;
-    const predictionAccuracy = determineAccuracyOfPrediction(
-      userPredictions,
-      results
-    );
+    const predictionAccuracy = userPredictions
+      ? determineAccuracyOfPrediction(userPredictions, results)
+      : {};
 
-    batch.update(docRef, { predictionAccuracy });
+    await batch.update(docRef, { predictionAccuracy });
   });
-
-  batch.commit().then(() => {
-    console.log(`updated all documents inside predictions`);
-  });
+  batch
+    .commit()
+    .then(() => {
+      console.log(`updated all documents inside predictions`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const determineAccuracyOfPrediction = (userPrediction: any, results: any) => {
